@@ -19,18 +19,17 @@ const FormLayout = ({ formProps }) => {
       try {
         if (data.password !== data.confirm_password)
           return toast.error("Passwords do not match");
-  
+
         const response = await axios.post("/api/auth/register", {
           username: data.username,
           email: data.email,
           password: data.password,
         });
-        console.log(response.message);
-        console.log(response.data);
+        toast.success(response.data.message);
       } catch (error) {
-        const resError = error.response.data
+        const resError = error.response.data;
         for (let i = 0; i < resError.length; i++) {
-          toast.error(resError[i])
+          toast.error(resError[i]);
         }
       }
     } else if (id === "product") {
