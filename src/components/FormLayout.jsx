@@ -28,7 +28,12 @@ const FormLayout = ({ formProps }) => {
           const { label, title, type, placeholder } = field;
           return (
             <div key={index}>
-              <label htmlFor={label}>{title}</label>
+              <label
+                htmlFor={label}
+                className="text-teal-900 font-semibold text-lg"
+              >
+                {title}
+              </label>
               {id === "register" ? (
                 <input
                   type={type}
@@ -39,6 +44,7 @@ const FormLayout = ({ formProps }) => {
                     },
                   })}
                   placeholder={placeholder}
+                  className="border-2 border-gray-300 rounded-md px-2 py-1 w-full mb-2 focus:border-emerald-500"
                 />
               ) : id === "product" ? (
                 <input type={field.type} placeholder={placeholder} />
@@ -46,7 +52,7 @@ const FormLayout = ({ formProps }) => {
             </div>
           );
         })}
-        <button type="submit" className="app-btn">
+        <button type="submit" className="app-btn mt-3">
           Add
         </button>
       </form>
