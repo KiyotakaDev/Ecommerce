@@ -1,6 +1,9 @@
 "use client";
 
+import axios from "axios";
 import { useForm } from "react-hook-form";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const FormLayout = ({ formProps }) => {
   const { id, pTitle, pMapper } = formProps;
@@ -13,7 +16,23 @@ const FormLayout = ({ formProps }) => {
 
   const selectSubmit = handleSubmit(async (data) => {
     if (id === "register") {
-      console.log("Register func: ", data);
+      try {
+        if (data.password !== data.confirm_password)
+          return toast.error("Passwords do not match");
+  
+        const response = await axios.post("/api/auth/register", {
+          username: data.username,
+          email: data.email,
+          password: data.password,
+        });
+        console.log(response.message);
+        console.log(response.data);
+      } catch (error) {
+        const resError = error.response.data
+        for (let i = 0; i < resError.length; i++) {
+          toast.error(resError[i])
+        }
+      }
     } else if (id === "product") {
       console.log("Product func: ", data);
     }
@@ -52,6 +71,7 @@ const FormLayout = ({ formProps }) => {
             </div>
           );
         })}
+        <ToastContainer />
         <button type="submit" className="app-btn mt-3">
           Add
         </button>
