@@ -26,7 +26,7 @@ const registerFields = [
     placeholder: "*****",
   },
   {
-    label: "confim_password",
+    label: "confirm_password",
     title: "Confirm password",
     type: "password",
     placeholder: "*****",
