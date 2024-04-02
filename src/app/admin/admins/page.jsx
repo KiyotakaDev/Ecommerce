@@ -1,8 +1,12 @@
-import React from 'react'
+import Link from 'next/link'
 
 const AdminsPage = () => {
   return (
-    <div>AdminsPage</div>
+    <div>
+      <Link href="admins/new" className='app-btn'>
+        Add admin
+      </Link>
+    </div>
   )
 }
 
