@@ -1,7 +1,8 @@
-import { HomeIcon, UserGroupIcon } from "@heroicons/react/24/outline";
+import { ArchiveBoxIcon, HomeIcon, UserGroupIcon } from "@heroicons/react/24/outline";
 
 const navLinks = [
   { name: "Dashboard", to: "/admin", icon: HomeIcon },
+  { name: "Products", to: "/admin", icon: ArchiveBoxIcon },
   { name: "Admins", to: "/admin/admins", icon: UserGroupIcon },
 ];
 
