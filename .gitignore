@@ -39,3 +39,6 @@ next-env.d.ts
 
 # prisma
 prisma
+
+# images
+public/products
