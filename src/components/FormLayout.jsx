@@ -1,54 +1,41 @@
 "use client";
 
-import { addProduct } from "@/app/admin/_actions/product";
-import axios from "axios";
-import { useForm } from "react-hook-form";
+import { addAdmin, addProduct } from "@/app/admin/_actions/actions";
+import { zodProduct } from "@/utils/schemas";
+import { useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const FormLayout = ({ formProps }) => {
+  const [price, setPrice] = useState(0);
+
   const { id, pTitle, pMapper } = formProps;
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm();
-
-  const handler = () => {
+  const handler = async (formData) => {
     if (id === "register") {
-      return handleSubmit(async (data) => {
-        try {
-          if (data.password !== data.confirm_password)
-            return toast.error("Passwords do not match");
-
-          const response = await axios.post("/api/auth/register", {
-            username: data.username,
-            email: data.email,
-            password: data.password,
-          });
-          toast.success(response.data.message);
-        } catch (error) {
-          const resError = error.response.data;
-          for (let i = 0; i < resError.length; i++) {
-            toast.error(resError[i]);
-          }
-        }
-      });
+      return addAdmin(formData);
     } else if (id === "product") {
-      return addProduct;
+      const validator = zodProduct.safeParse({
+        product: formData.get("product"),
+        images: formData.getAll("image"),
+        description: formData.get("description"),
+        price: formData.get("price"),
+      });
+      if (!validator.success) {
+        const errors = validator.error.formErrors.fieldErrors
+        for (const err in errors) {
+          toast.error(errors[err][0])
+        }
+      }
+      return addProduct(formData);
     }
   };
-
-  const select = handler();
-
-  let messages = []
 
   return (
     <div>
       <h1 className="text-teal-900 font-bold my-2 mb-4 text-3xl">{pTitle}</h1>
 
-      <form action={select}>
+      <form action={handler}>
         {pMapper.map((field, index) => {
           return (
             <div key={index}>
@@ -62,12 +49,7 @@ const FormLayout = ({ formProps }) => {
                   </label>
                   <input
                     type={field.type}
-                    {...register(field.label, {
-                      required: {
-                        value: true,
-                        message: `${field.title} is required.`,
-                      },
-                    })}
+                    name={field.label}
                     placeholder={field.placeholder}
                     className="border-2 border-gray-300 rounded-md px-2 py-1 w-full mb-2 focus:border-emerald-500"
                   />
@@ -82,18 +64,17 @@ const FormLayout = ({ formProps }) => {
                   </label>
                   <field.html
                     type={field.type}
-                    {...register(`${field.label}`, {
-                      required: {
-                        value: true,
-                        message: `${field.title} is required.`,
-                      },
-                    })}
+                    name={field.label}
                     placeholder={field.placeholder}
                     {...(field.type === "file"
                       ? { multiple: true, accept: "image/*" }
                       : {})}
+                    {...(field.type === "number"
+                      ? { onChange: (e) => setPrice(e.target.value) }
+                      : {})}
                     className="border-2 border-gray-300 rounded-md px-2 py-1 w-full mb-2 focus:border-emerald-500"
                   />
+                  {field.type === "number" ? <span>${price / 100}</span> : null}
                 </>
               ) : null}
             </div>
