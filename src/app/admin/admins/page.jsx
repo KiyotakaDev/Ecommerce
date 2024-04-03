@@ -26,7 +26,7 @@ const AdminsPage = () => {
         pTitle: 'Admins', 
         pField: 'Admin', 
         pMapper: admins,
-        setField: setAdmins
+        setMapper: setAdmins
       }} />
     </>
   )

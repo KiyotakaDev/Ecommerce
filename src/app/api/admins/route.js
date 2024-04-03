@@ -3,7 +3,7 @@ import db from '@/utils/prisma'
 
 export async function GET() {
   try {
-    const users = await db.user.findMany({
+    const users = await db.admin.findMany({
       orderBy: {
         id: "asc"
       }

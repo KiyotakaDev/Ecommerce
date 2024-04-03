@@ -7,14 +7,14 @@ import "react-toastify/dist/ReactToastify.css";
 
 
 const DataLayout = ({ dataProps }) => {
-  const { pLink, pTitle, pField, pMapper, setField } = dataProps;
+  const { pLink, pTitle, pField, pMapper, setMapper } = dataProps;
 
   const customDeleteHandler = async (id) => {
     if (pField === "Admin") {
       try {
         const response = await axios.delete(`/api/admin/${id}`);
         toast.success(response.data);
-        setField(pMapper.filter((mapper) => mapper.id !== id))
+        setMapper(pMapper.filter((mapper) => mapper.id !== id))
       } catch (error) {
         toast.error("Something went wrong")
       }

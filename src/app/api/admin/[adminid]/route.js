@@ -4,7 +4,7 @@ import db from '@/utils/prisma'
 export async function DELETE(_, { params }) {
   try {
     const { adminid } = params;
-    await db.user.delete({
+    await db.admin.delete({
       where: {
         id: parseInt(adminid)
       }
