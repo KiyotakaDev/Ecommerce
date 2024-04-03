@@ -21,3 +21,16 @@ export const zodProduct = z.object({
     .int()
     .min(1, { message: "Price must be greater than or equal to 1" }),
 });
+
+export const zodAdmin = z.object({
+  username: z
+    .string()
+    .regex(/^[a-zA-Z0-9]+$/, {
+      message: "Only characters and numbers are allowed for username",
+    })
+    .min(3, { message: "Username must contain at least 3 characters" }),
+  email: z.string().email(),
+  password: z
+    .string()
+    .min(8, { message: "Password must contain at least 8 characters" }),
+});
