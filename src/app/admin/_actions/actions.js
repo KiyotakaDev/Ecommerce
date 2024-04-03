@@ -2,7 +2,8 @@
 
 import db from "@/utils/prisma";
 import fs from "fs/promises";
-import { zodProduct } from '@/utils/schemas'
+import { zodAdmin, zodProduct } from '@/utils/schemas'
+import bcrypt from 'bcrypt'
 
 export async function addProduct(formData) {
   try {
@@ -40,22 +41,6 @@ export async function addProduct(formData) {
         description: data.description,
         price: data.price
       },
-    });
-  } catch (error) {
-    console.log("Error adding product: ", error.message);
-  }
-}
-
-// Add admin function
-export async function addAdmin(formData) {
-  try {
-    if (data.password !== data.confirm_password)
-      return toast.error("Passwords do not match");
-
-    const response = await axios.post("/api/auth/register", {
-      username: data.username,
-      email: data.email,
-      password: data.password,
     });
   } catch (error) {
     console.log("Error adding product: ", error.message);
