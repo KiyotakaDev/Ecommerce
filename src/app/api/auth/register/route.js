@@ -7,13 +7,13 @@ export async function POST(request) {
     const data = await request.json();
     let errors = []
 
-    const userFound = await db.admin.findUnique({
+    const userFound = await db.user.findUnique({
       where: {
         username: data.username,
       },
     });
     if (userFound) errors.push("Username already exists")
-    const emailFound = await db.admin.findUnique({
+    const emailFound = await db.user.findUnique({
       where: {
         email: data.email,
       },
@@ -25,7 +25,7 @@ export async function POST(request) {
     
 
     const passwordHash = await bcrypt.hash(data.password, 10);
-    const newUser = await db.admin.create({
+    const newUser = await db.user.create({
       data: {
         username: data.username,
         email: data.email,
@@ -35,7 +35,7 @@ export async function POST(request) {
 
     const { password: _, ...user } = newUser;
 
-    return NextResponse.json({ data: user, message: "Admin created!" });
+    return NextResponse.json({ data: user, message: "User created!" });
   } catch (error) {
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
