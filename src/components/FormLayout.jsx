@@ -1,7 +1,8 @@
 "use client";
 
-import { addAdmin, addProduct } from "@/app/admin/_actions/actions";
-import { zodProduct } from "@/utils/schemas";
+import { addProduct } from "@/app/admin/_actions/actions";
+import { zodAdmin, zodProduct } from "@/utils/schemas";
+import axios from "axios";
 import { useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -13,7 +14,34 @@ const FormLayout = ({ formProps }) => {
 
   const handler = async (formData) => {
     if (id === "register") {
-      return addAdmin(formData);
+      try {
+        const newData = {
+          username: formData.get("username"),
+          email: formData.get("email"),
+          password: formData.get("password"),
+        };
+
+        if (newData.password !== formData.get("confirm_password")) {
+          return toast.error("Passwords do not match");
+        }
+
+        const validator = zodAdmin.safeParse(newData)
+        if (!validator.success) {
+          const errors = validator.error.formErrors.fieldErrors
+          for (const err in errors) {
+            toast.error(errors[err][0])
+          }
+          return
+        }
+
+        const response = await axios.post("/api/admin/new", newData);
+        toast.success(response.data);
+      } catch (error) {
+        const errors = error.response.data;
+        for (let i = 0; i < errors.length; i++) {
+          toast.error(errors[i]);
+        }
+      }
     } else if (id === "product") {
       const validator = zodProduct.safeParse({
         product: formData.get("product"),
@@ -22,11 +50,12 @@ const FormLayout = ({ formProps }) => {
         price: formData.get("price"),
       });
       if (!validator.success) {
-        const errors = validator.error.formErrors.fieldErrors
+        const errors = validator.error.formErrors.fieldErrors;
         for (const err in errors) {
-          toast.error(errors[err][0])
+          toast.error(errors[err][0]);
         }
       }
+
       return addProduct(formData);
     }
   };
