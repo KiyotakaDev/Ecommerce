@@ -2,8 +2,7 @@
 
 import db from "@/utils/prisma";
 import fs from "fs/promises";
-import { zodAdmin, zodProduct } from '@/utils/schemas'
-import bcrypt from 'bcrypt'
+import { zodProduct } from '@/utils/schemas'
 
 export async function addProduct(formData) {
   try {
