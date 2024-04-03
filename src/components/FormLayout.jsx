@@ -1,5 +1,6 @@
 "use client";
 
+import { addProduct } from "@/app/admin/_actions/product";
 import axios from "axios";
 import { useForm } from "react-hook-form";
 import { ToastContainer, toast } from "react-toastify";
@@ -14,58 +15,86 @@ const FormLayout = ({ formProps }) => {
     formState: { errors },
   } = useForm();
 
-  const selectSubmit = handleSubmit(async (data) => {
+  const handler = () => {
     if (id === "register") {
-      try {
-        if (data.password !== data.confirm_password)
-          return toast.error("Passwords do not match");
+      return handleSubmit(async (data) => {
+        try {
+          if (data.password !== data.confirm_password)
+            return toast.error("Passwords do not match");
 
-        const response = await axios.post("/api/auth/register", {
-          username: data.username,
-          email: data.email,
-          password: data.password,
-        });
-        toast.success(response.data.message);
-      } catch (error) {
-        const resError = error.response.data;
-        for (let i = 0; i < resError.length; i++) {
-          toast.error(resError[i]);
+          const response = await axios.post("/api/auth/register", {
+            username: data.username,
+            email: data.email,
+            password: data.password,
+          });
+          toast.success(response.data.message);
+        } catch (error) {
+          const resError = error.response.data;
+          for (let i = 0; i < resError.length; i++) {
+            toast.error(resError[i]);
+          }
         }
-      }
+      });
     } else if (id === "product") {
-      console.log("Product func: ", data);
+      return addProduct;
     }
-  });
+  };
+
+  const select = handler();
+
+  let messages = []
 
   return (
     <div>
       <h1 className="text-teal-900 font-bold my-2 mb-4 text-3xl">{pTitle}</h1>
 
-      <form action={selectSubmit}>
+      <form action={select}>
         {pMapper.map((field, index) => {
-          const { label, title, type, placeholder } = field;
           return (
             <div key={index}>
-              <label
-                htmlFor={label}
-                className="text-teal-900 font-semibold text-lg"
-              >
-                {title}
-              </label>
               {id === "register" ? (
-                <input
-                  type={type}
-                  {...register(label, {
-                    required: {
-                      value: true,
-                      message: `${title} is required.`,
-                    },
-                  })}
-                  placeholder={placeholder}
-                  className="border-2 border-gray-300 rounded-md px-2 py-1 w-full mb-2 focus:border-emerald-500"
-                />
+                <>
+                  <label
+                    htmlFor={field.label}
+                    className="text-teal-900 font-semibold text-lg"
+                  >
+                    {field.title}
+                  </label>
+                  <input
+                    type={field.type}
+                    {...register(field.label, {
+                      required: {
+                        value: true,
+                        message: `${field.title} is required.`,
+                      },
+                    })}
+                    placeholder={field.placeholder}
+                    className="border-2 border-gray-300 rounded-md px-2 py-1 w-full mb-2 focus:border-emerald-500"
+                  />
+                </>
               ) : id === "product" ? (
-                <input type={field.type} placeholder={placeholder} />
+                <>
+                  <label
+                    htmlFor={field.label}
+                    className="text-teal-900 font-semibold text-lg"
+                  >
+                    {field.title}
+                  </label>
+                  <field.html
+                    type={field.type}
+                    {...register(`${field.label}`, {
+                      required: {
+                        value: true,
+                        message: `${field.title} is required.`,
+                      },
+                    })}
+                    placeholder={field.placeholder}
+                    {...(field.type === "file"
+                      ? { multiple: true, accept: "image/*" }
+                      : {})}
+                    className="border-2 border-gray-300 rounded-md px-2 py-1 w-full mb-2 focus:border-emerald-500"
+                  />
+                </>
               ) : null}
             </div>
           );
