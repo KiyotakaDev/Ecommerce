@@ -2,7 +2,7 @@ import { ArchiveBoxIcon, HomeIcon, UserGroupIcon } from "@heroicons/react/24/out
 
 const navLinks = [
   { name: "Dashboard", to: "/admin", icon: HomeIcon },
-  { name: "Products", to: "/admin", icon: ArchiveBoxIcon },
+  { name: "Products", to: "/admin/products", icon: ArchiveBoxIcon },
   { name: "Admins", to: "/admin/admins", icon: UserGroupIcon },
 ];
 
@@ -34,10 +34,32 @@ const registerFields = [
 ];
 const productFields = [
   {
+    html: "input",
+    type: "text",
     label: "product",
     title: "Product",
+    placeholder: "e.g.camera",
+  },
+  {
+    html: "input",
+    type: "file",
+    label: "image",
+    title: "Images",
+    placeholder: "",
+  },
+  {
+    html: "textarea",
     type: "text",
-    placeholder: "Camera",
+    label: "description",
+    title: "Description",
+    placeholder: "e.g.camera",
+  },
+  {
+    html: "input",
+    type: "number",
+    label: "price",
+    title: "Price",
+    placeholder: "0",
   },
 ];
 
