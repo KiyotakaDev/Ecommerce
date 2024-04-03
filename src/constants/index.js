@@ -58,7 +58,7 @@ const productFields = [
     html: "input",
     type: "number",
     label: "price",
-    title: "Price",
+    title: "Price (Cents)",
     placeholder: "0",
   },
 ];
