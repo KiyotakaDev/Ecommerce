@@ -1,5 +1,6 @@
 'use client'
 
+import Animation from '@/components/Animation'
 import DataLayout from '@/components/DataLayout'
 import axios from 'axios'
 import { useEffect, useState } from 'react'
@@ -20,7 +21,7 @@ const Products = () => {
   }, [])
   
   return (
-    <>
+    <Animation>
       <DataLayout dataProps={{
         pLink: 'products/new', 
         pTitle: 'Products', 
@@ -28,7 +29,7 @@ const Products = () => {
         pMapper: products,
         setMapper: setProducts
       }} />
-    </>
+    </Animation>
   )
 }
 

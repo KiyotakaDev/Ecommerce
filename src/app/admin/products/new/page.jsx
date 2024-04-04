@@ -1,9 +1,10 @@
+import Animation from "@/components/Animation";
 import FormLayout from "@/components/FormLayout";
 import { addProductFields } from "@/constants";
 
 const AddProduct = () => {
   return (
-    <>
+    <Animation>
       <FormLayout
         formProps={{
           id: "products",
@@ -11,7 +12,7 @@ const AddProduct = () => {
           pMapper: addProductFields,
         }}
       />
-    </>
+    </Animation>
   );
 };
 
