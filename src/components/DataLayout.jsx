@@ -19,14 +19,20 @@ const DataLayout = ({ dataProps }) => {
         toast.error("Something went wrong")
       }
     } else if (pField === "Product") {
-      console.log("Hello product");
+      try {
+        const response = await axios.delete(`/api/product/${id}`);
+        toast.success(response.data);
+        setMapper(pMapper.filter((mapper) => mapper.id !== id))
+      } catch (error) {
+        toast.error("Something went wrong")
+      }
     }
   };
 
   return (
     <div>
       <Link href={pLink} className="app-btn">
-        Add admin
+        {`Add ${pField.toLowerCase()}`}
       </Link>
       {pMapper.length === 0 ? (
         <p>No {pField.toLowerCase()} added</p>
@@ -40,10 +46,10 @@ const DataLayout = ({ dataProps }) => {
           </thead>
           <tbody>
             {pMapper.map((field) => {
-              const { id, username } = field;
+              const { id, username, name } = field;
               return (
                 <tr key={id}>
-                  <td className="text-xl">{username}</td>
+                  <td className="text-xl">{pField === 'Admin' ? username : name}</td>
                   <td>
                     <button
                       onClick={() => customDeleteHandler(id)}
