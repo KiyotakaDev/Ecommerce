@@ -1,8 +1,9 @@
+import Animation from '@/components/Animation'
 import React from 'react'
 
 const AdminPage = () => {
   return (
-    <div>AdminPage</div>
+    <Animation>AdminPage</Animation>
   )
 }
 
