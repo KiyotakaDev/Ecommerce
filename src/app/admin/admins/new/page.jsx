@@ -1,14 +1,14 @@
 import FormLayout from "@/components/FormLayout";
-import { registerFields } from "@/constants";
+import { addAdminFields } from "@/constants";
 
 const AddAdmin = () => {
   return (
     <>
       <FormLayout
         formProps={{
-          id: "register",
+          id: "admins",
           pTitle: "New Admin",
-          pMapper: registerFields,
+          pMapper: addAdminFields,
         }}
       />
     </>
