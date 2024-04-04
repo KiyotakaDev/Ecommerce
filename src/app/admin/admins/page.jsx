@@ -24,7 +24,6 @@ const AdminsPage = () => {
     <Animation>
       <DataLayout dataProps={{
         pLink: 'admins/new', 
-        pTitle: 'Admins', 
         pField: 'Admin', 
         pMapper: admins,
         setMapper: setAdmins

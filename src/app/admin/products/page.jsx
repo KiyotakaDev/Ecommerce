@@ -24,7 +24,6 @@ const Products = () => {
     <Animation>
       <DataLayout dataProps={{
         pLink: 'products/new', 
-        pTitle: 'Products', 
         pField: 'Product', 
         pMapper: products,
         setMapper: setProducts
