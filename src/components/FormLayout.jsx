@@ -7,8 +7,10 @@ import { useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import InputFields from "./InputFields";
+import { useRouter } from 'next/navigation'
 
 const FormLayout = ({ formProps }) => {
+  const router = useRouter()
   const [price, setPrice] = useState(0);
 
   const { id, pTitle, pMapper } = formProps;
@@ -36,6 +38,9 @@ const FormLayout = ({ formProps }) => {
         }
 
         const response = await axios.post("/api/admin/new", newData);
+        if (response.status === 200) {
+          router.push("/admin/admins")
+        }
         toast.success(response.data);
       } catch (error) {
         const errors = error.response.data;
@@ -57,6 +62,7 @@ const FormLayout = ({ formProps }) => {
         }
       }
 
+      router.push('/admin/products')
       return addProduct(formData);
     }
   };
