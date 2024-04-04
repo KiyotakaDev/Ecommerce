@@ -1,5 +1,5 @@
 import FormLayout from "@/components/FormLayout";
-import { addAdminFields } from "@/constants";
+import { addProductFields } from "@/constants";
 
 const AddProduct = () => {
   return (
@@ -8,7 +8,7 @@ const AddProduct = () => {
         formProps={{
           id: "products",
           pTitle: "New Product",
-          pMapper: addAdminFields,
+          pMapper: addProductFields,
         }}
       />
     </>
