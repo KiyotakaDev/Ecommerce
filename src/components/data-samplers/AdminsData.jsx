@@ -1,5 +1,4 @@
-import { InformationCircleIcon, PencilSquareIcon, TrashIcon } from "@heroicons/react/24/outline";
-
+import ActionHandler from "../sub/ActionHandler";
 
 const AdminsData = (props) => {
   return (
@@ -10,52 +9,39 @@ const AdminsData = (props) => {
         <table>
           <thead>
             <tr>
-              <th>{props.pTitle}</th>
+              <th>Admins</th>
               <th>email</th>
               <th>Actions</th>
             </tr>
           </thead>
           <tbody>
             {props.pMapper.map((field) => {
-              const { id, username, email, name } = field;
-              const validation = props.pField === "Admin" ? username : name
+              const { id, username, email } = field;
               return (
                 <tr key={id}>
-                  <td className="text-xl">
-                    {validation}
-                  </td>
+                  <td className="text-xl">{username}</td>
                   <td>{email}</td>
                   <td className="flex justify-center items-center gap-4">
-                    {username !== 'root' ? (
-                      <>
-                      <button
-                        onClick={() => {
-                          props.handleAction(id)
-                          props.setSelected(validation)
-                        }}
-                        className="bg-red-400/80 action-btn"
-                      >
-                        <TrashIcon className="w-8 h-8" />
-                        Delete
-                      </button>
-                      <button
-                        onClick={() => {
-                          props.handleAction(id)
-                          props.setSelected(validation)
-                        }}
-                        className="bg-yellow-400/80 action-btn"
-                      >
-                        <PencilSquareIcon className="w-8 h-8" />
-                        Edit
-                      </button>
-                      </>
+                    {username !== "root" ? (
+                      <ActionHandler
+                        action={{
+                          handler: props.handleAction,
+                          selected: props.setSelected,
+                        }} 
+                        id={0}
+                        objId={id}
+                        objName={username}
+                      />
                     ) : (
-                      <button onClick={() => {
-                        props.handleAction(id)
-                        props.setSelected(validation)
-                      }} className="bg-gray-300 action-btn w-full">
-                        <InformationCircleIcon className="w-6 h-6" />
-                      </button>
+                      <ActionHandler
+                        action={{
+                          handler: props.handleAction,
+                          selected: props.setSelected,
+                        }}
+                        id={1}
+                        objId={id}
+                        objName={username}
+                      />
                     )}
                   </td>
                 </tr>
@@ -65,7 +51,7 @@ const AdminsData = (props) => {
         </table>
       )}
     </div>
-  )
-}
+  );
+};
 
-export default AdminsData
+export default AdminsData;
