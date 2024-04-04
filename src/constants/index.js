@@ -1,4 +1,8 @@
-import { ArchiveBoxIcon, HomeIcon, UserGroupIcon } from "@heroicons/react/24/outline";
+import {
+  ArchiveBoxIcon,
+  HomeIcon,
+  UserGroupIcon,
+} from "@heroicons/react/24/outline";
 
 const navLinks = [
   { name: "Dashboard", to: "/admin", icon: HomeIcon },
@@ -6,33 +10,37 @@ const navLinks = [
   { name: "Admins", to: "/admin/admins", icon: UserGroupIcon },
 ];
 
-const registerFields = [
+const addAdminFields = [
   {
+    html: "input",
     label: "username",
     title: "Username",
     type: "text",
     placeholder: "zorg",
   },
   {
+    html: "input",
     label: "email",
     title: "Email",
     type: "text",
     placeholder: "email@example.com",
   },
   {
+    html: "input",
     label: "password",
     title: "Password",
     type: "password",
     placeholder: "*****",
   },
   {
+    html: "input",
     label: "confirm_password",
     title: "Confirm password",
     type: "password",
     placeholder: "*****",
   },
 ];
-const productFields = [
+const addProductFields = [
   {
     html: "input",
     type: "text",
@@ -63,4 +71,4 @@ const productFields = [
   },
 ];
 
-export { navLinks, registerFields, productFields };
+export { navLinks, addAdminFields, addProductFields };
