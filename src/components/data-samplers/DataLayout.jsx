@@ -1,18 +1,19 @@
 "use client";
 
-import { TrashIcon } from "@heroicons/react/24/outline";
 import axios from "axios";
 import Link from "next/link";
 import { useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { motion, AnimatePresence } from "framer-motion";
+import AdminsData from "./AdminsData";
+import ProductsData from "./ProductsData";
 
 const DataLayout = ({ dataProps }) => {
   const { pLink, pTitle, pField, pMapper, setMapper } = dataProps;
   const [idToDelete, setIdToDelete] = useState(null);
   const [showModal, setShowModal] = useState(false);
-  const [selected, setSelected] = useState("")
+  const [selected, setSelected] = useState("");
 
   const deleteOnClick = (id) => {
     setShowModal(true);
@@ -54,43 +55,15 @@ const DataLayout = ({ dataProps }) => {
       <Link href={pLink} className="app-btn">
         {`Add ${pField.toLowerCase()}`}
       </Link>
-      {pMapper.length === 0 ? (
-        <p>No {pField.toLowerCase()} added</p>
-      ) : (
-        <table>
-          <thead>
-            <tr>
-              <th>{pTitle}</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {pMapper.map((field) => {
-              const { id, username, name } = field;
-              const validation = pField === "Admin" ? username : name
-              return (
-                <tr key={id}>
-                  <td className="text-xl">
-                    {validation}
-                  </td>
-                  <td>
-                    <button
-                      onClick={() => {
-                        deleteOnClick(id)
-                        setSelected(validation)
-                      }}
-                      className="bg-red-400/80 px-2 py-1 rounded-lg text-base flex justify-center items-center"
-                    >
-                      <TrashIcon className="w-8 h-8" />
-                      Delete
-                    </button>
-                  </td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
-      )}
+      {pField === "Admin" ? (
+        <AdminsData
+          {...dataProps}
+          deleteOnClick={deleteOnClick}
+          setSelected={setSelected}
+        />
+      ) : pField === "Product" ? (
+        <ProductsData />
+      ) : null}
       <AnimatePresence>
         {showModal && (
           <motion.div
@@ -105,27 +78,52 @@ const DataLayout = ({ dataProps }) => {
               animate={{ y: 0, opacity: 1 }}
               exit={{ y: 100, opacity: 0 }}
             >
-              <p className="mb-4 flex flex-col gap-4">
-                <p>
-                  Are you sure you want to <span className="text-red-500">delete</span> this{" "}
-                  <span className="font-bold">{pField.toLowerCase()}</span>?
-                </p>
-                <p>
-                  <b>"{selected}"</b>
-                </p>
-              </p>
-              <button
-                onClick={confirmDelete}
-                className="bg-red-500 text-white px-4 py-2 rounded-md mr-2"
-              >
-                Yes
-              </button>
-              <button
-                onClick={cancelDelete}
-                className="bg-gray-300 text-gray-800 px-4 py-2 rounded-md"
-              >
-                No
-              </button>
+              {selected === "root" ? (
+                <div>
+                  <p>Root user can't be deleted</p>
+                  <button
+                    onClick={cancelDelete}
+                    className="bg-emerald-400 delete-handler-btn"
+                  >
+                    OK
+                  </button>
+                </div>
+              ) : pMapper.length === 1 ? (
+                <div>
+                  <p>The app must have at least one Admin!</p>
+                  <button
+                    onClick={cancelDelete}
+                    className="bg-emerald-400 delete-handler-btn"
+                  >
+                    OK
+                  </button>
+                </div>
+              ) : (
+                <>
+                  <p className="mb-4 flex flex-col gap-4">
+                    <p>
+                      Are you sure you want to{" "}
+                      <span className="text-red-500">delete</span> this{" "}
+                      <span className="font-bold">{pField.toLowerCase()}</span>?
+                    </p>
+                    <p>
+                      <b>"{selected}"</b>
+                    </p>
+                  </p>
+                  <button
+                    onClick={confirmDelete}
+                    className="bg-red-500 text-white px-4 py-2 rounded-md mr-2"
+                  >
+                    Yes
+                  </button>
+                  <button
+                    onClick={cancelDelete}
+                    className="bg-gray-300 text-gray-800 px-4 py-2 rounded-md"
+                  >
+                    No
+                  </button>
+                </>
+              )}
             </motion.div>
           </motion.div>
         )}
