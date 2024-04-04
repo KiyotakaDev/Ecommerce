@@ -1,5 +1,5 @@
 import Animation from "@/components/Animation";
-import FormLayout from "@/components/FormLayout";
+import FormLayout from "@/components/form/FormLayout";
 import { addAdminFields } from "@/constants";
 
 const AddAdmin = () => {

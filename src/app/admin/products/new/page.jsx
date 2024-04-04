@@ -1,5 +1,5 @@
 import Animation from "@/components/Animation";
-import FormLayout from "@/components/FormLayout";
+import FormLayout from "@/components/form/FormLayout";
 import { addProductFields } from "@/constants";
 
 const AddProduct = () => {

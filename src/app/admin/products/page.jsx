@@ -1,7 +1,7 @@
 'use client'
 
 import Animation from '@/components/Animation'
-import DataLayout from '@/components/DataLayout'
+import DataLayout from '@/components/data-samplers/DataLayout'
 import axios from 'axios'
 import { useEffect, useState } from 'react'
 
