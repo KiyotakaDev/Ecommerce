@@ -11,7 +11,7 @@ import Modal from "../sub/Modal";
 import BtnHandler from "../sub/BtnHandler";
 
 const DataLayout = ({ dataProps }) => {
-  const { pLink, pTitle, pField, pMapper, setMapper } = dataProps;
+  const { pLink, pField, pMapper, setMapper } = dataProps;
   const [idToDelete, setIdToDelete] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const [selected, setSelected] = useState("");
@@ -53,6 +53,7 @@ const DataLayout = ({ dataProps }) => {
 
   return (
     <div>
+      <h1 className="text-teal-900 font-bold my-2 mb-4 text-3xl">{pField}s</h1>
       <Link href={pLink} className="app-btn">
         {`Add ${pField.toLowerCase()}`}
       </Link>
