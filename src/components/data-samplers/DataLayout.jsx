@@ -64,7 +64,11 @@ const DataLayout = ({ dataProps }) => {
           setSelected={setSelected}
         />
       ) : pField === "Product" ? (
-        <ProductsData />
+        <ProductsData
+          {...dataProps}
+          handleAction={handleAction}
+          setSelected={setSelected}
+        />
       ) : null}
       <Modal isOpen={showModal} cancel={cancelDelete}>
         {selected === "root" ? (
