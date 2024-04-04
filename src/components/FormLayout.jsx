@@ -6,6 +6,7 @@ import axios from "axios";
 import { useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import InputFields from "./InputFields";
 
 const FormLayout = ({ formProps }) => {
   const [price, setPrice] = useState(0);
@@ -13,7 +14,7 @@ const FormLayout = ({ formProps }) => {
   const { id, pTitle, pMapper } = formProps;
 
   const handler = async (formData) => {
-    if (id === "register") {
+    if (id === "admins") {
       try {
         const newData = {
           username: formData.get("username"),
@@ -42,7 +43,7 @@ const FormLayout = ({ formProps }) => {
           toast.error(errors[i]);
         }
       }
-    } else if (id === "product") {
+    } else if (id === "products") {
       const validator = zodProduct.safeParse({
         product: formData.get("product"),
         images: formData.getAll("image"),
@@ -68,43 +69,10 @@ const FormLayout = ({ formProps }) => {
         {pMapper.map((field, index) => {
           return (
             <div key={index}>
-              {id === "register" ? (
-                <>
-                  <label
-                    htmlFor={field.label}
-                    className="text-teal-900 font-semibold text-lg"
-                  >
-                    {field.title}
-                  </label>
-                  <input
-                    type={field.type}
-                    name={field.label}
-                    placeholder={field.placeholder}
-                    className="border-2 border-gray-300 rounded-md px-2 py-1 w-full mb-2 focus:border-emerald-500"
-                  />
-                </>
-              ) : id === "product" ? (
-                <>
-                  <label
-                    htmlFor={field.label}
-                    className="text-teal-900 font-semibold text-lg"
-                  >
-                    {field.title}
-                  </label>
-                  <field.html
-                    type={field.type}
-                    name={field.label}
-                    placeholder={field.placeholder}
-                    {...(field.type === "file"
-                      ? { multiple: true, accept: "image/*" }
-                      : {})}
-                    {...(field.type === "number"
-                      ? { onChange: (e) => setPrice(e.target.value) }
-                      : {})}
-                    className="border-2 border-gray-300 rounded-md px-2 py-1 w-full mb-2 focus:border-emerald-500"
-                  />
-                  {field.type === "number" ? <span>${price / 100}</span> : null}
-                </>
+              {id === "admins" ? (
+                  <InputFields {...field} />
+              ) : id === "products" ? (
+                  <InputFields {...field} price={price} setPrice={setPrice} />
               ) : null}
             </div>
           );
