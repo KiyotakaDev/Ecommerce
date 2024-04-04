@@ -5,9 +5,10 @@ import Link from "next/link";
 import { useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { motion, AnimatePresence } from "framer-motion";
 import AdminsData from "./AdminsData";
 import ProductsData from "./ProductsData";
+import Modal from "../sub/Modal";
+import BtnHandler from "../sub/BtnHandler";
 
 const DataLayout = ({ dataProps }) => {
   const { pLink, pTitle, pField, pMapper, setMapper } = dataProps;
@@ -15,7 +16,7 @@ const DataLayout = ({ dataProps }) => {
   const [showModal, setShowModal] = useState(false);
   const [selected, setSelected] = useState("");
 
-  const deleteOnClick = (id) => {
+  const handleAction = (id) => {
     setShowModal(true);
     setIdToDelete(id);
   };
@@ -58,76 +59,29 @@ const DataLayout = ({ dataProps }) => {
       {pField === "Admin" ? (
         <AdminsData
           {...dataProps}
-          deleteOnClick={deleteOnClick}
+          handleAction={handleAction}
           setSelected={setSelected}
         />
       ) : pField === "Product" ? (
         <ProductsData />
       ) : null}
-      <AnimatePresence>
-        {showModal && (
-          <motion.div
-            className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-50"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-          >
-            <motion.div
-              className="bg-white p-4 rounded-md"
-              initial={{ y: 100, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              exit={{ y: 100, opacity: 0 }}
-            >
-              {selected === "root" ? (
-                <div>
-                  <p>Root user can't be deleted</p>
-                  <button
-                    onClick={cancelDelete}
-                    className="bg-emerald-400 delete-handler-btn"
-                  >
-                    OK
-                  </button>
-                </div>
-              ) : pMapper.length === 1 ? (
-                <div>
-                  <p>The app must have at least one Admin!</p>
-                  <button
-                    onClick={cancelDelete}
-                    className="bg-emerald-400 delete-handler-btn"
-                  >
-                    OK
-                  </button>
-                </div>
-              ) : (
-                <>
-                  <p className="mb-4 flex flex-col gap-4">
-                    <p>
-                      Are you sure you want to{" "}
-                      <span className="text-red-500">delete</span> this{" "}
-                      <span className="font-bold">{pField.toLowerCase()}</span>?
-                    </p>
-                    <p>
-                      <b>"{selected}"</b>
-                    </p>
-                  </p>
-                  <button
-                    onClick={confirmDelete}
-                    className="bg-red-500 text-white px-4 py-2 rounded-md mr-2"
-                  >
-                    Yes
-                  </button>
-                  <button
-                    onClick={cancelDelete}
-                    className="bg-gray-300 text-gray-800 px-4 py-2 rounded-md"
-                  >
-                    No
-                  </button>
-                </>
-              )}
-            </motion.div>
-          </motion.div>
+      <Modal isOpen={showModal} cancel={cancelDelete}>
+        {selected === "root" ? (
+          <BtnHandler id={0} action={{ cancel: cancelDelete }} />
+        ) : pMapper.length === 2 ? (
+          <BtnHandler id={1} action={{ cancel: cancelDelete }} />
+        ) : (
+          <BtnHandler
+            id={2}
+            action={{
+              confirm: confirmDelete,
+              cancel: cancelDelete,
+            }}
+            obj={selected}
+            type={pField.toLowerCase()}
+          />
         )}
-      </AnimatePresence>
+      </Modal>
       <ToastContainer autoClose={2500} />
     </div>
   );
