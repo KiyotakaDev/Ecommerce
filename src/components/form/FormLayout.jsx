@@ -12,6 +12,7 @@ import { useRouter } from "next/navigation";
 const FormLayout = ({ formProps }) => {
   const router = useRouter();
   const [price, setPrice] = useState(0);
+  const [images, setImages] = useState([]);
 
   const { id, pTitle, pMapper } = formProps;
 
@@ -49,23 +50,33 @@ const FormLayout = ({ formProps }) => {
         }
       }
     } else if (id === "products") {
-      const validator = zodProduct.safeParse({
-        product: formData.get("product"),
-        images: formData.getAll("image"),
-        description: formData.get("description"),
-        price: formData.get("price"),
-      });
-      if (!validator.success) {
-        const errors = validator.error.formErrors.fieldErrors;
-        for (const err in errors) {
-          toast.error(errors[err][0]);
+      try {
+        
+        images.forEach((image) => {
+          formData.append("images", image);
+        });
+        const newData = {
+          product: formData.get("product"),
+          images: formData.getAll("images"),
+          description: formData.get("description"),
+          price: formData.get("price"),
+        };
+        const validator = zodProduct.safeParse(newData);
+        if (!validator.success) {
+          const errors = validator.error.formErrors.fieldErrors;
+          for (const err in errors) {
+            toast.error(errors[err][0]);
+          }
         }
+        
+        const response = await addProduct(formData);
+        if (response === 200) {
+          router.push("/admin/products");
+        }
+      } catch (error) {
+        console.log(error.message);
       }
 
-      const response = await addProduct(formData);
-      if (response === 200) {
-        router.push("/admin/products");
-      }
     }
   };
 
@@ -84,8 +95,11 @@ const FormLayout = ({ formProps }) => {
                   {...field}
                   price={price}
                   setPrice={setPrice}
-                  useState={useState}
                   toast={toast}
+                  image={{
+                    images,
+                    setImages,
+                  }}
                 />
               ) : null}
             </div>

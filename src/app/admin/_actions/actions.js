@@ -2,22 +2,23 @@
 
 import db from "@/utils/prisma";
 import fs from "fs/promises";
-import { zodProduct } from '@/utils/schemas'
+import { zodProduct } from "@/utils/schemas";
 
 export async function addProduct(formData) {
   try {
-    const validateFields = zodProduct.safeParse({
+    const newData = {
       product: formData.get("product"),
-      images: formData.getAll("image"),
+      images: formData.getAll("images"),
       description: formData.get("description"),
       price: formData.get("price"),
-    });
+    };
+    const validateFields = zodProduct.safeParse(newData);
     if (!validateFields.success) {
       return validateFields.error.formErrors.fieldErrors;
     }
 
     const data = validateFields.data;
-  
+
     let imagesPath = [];
 
     await fs.mkdir("public/products", { recursive: true });
@@ -38,10 +39,10 @@ export async function addProduct(formData) {
         name: data.product,
         imagesPath,
         description: data.description,
-        price: data.price
+        price: data.price,
       },
     });
-    return 200
+    return 200;
   } catch (error) {
     console.log("Error adding product: ", error.message);
   }
