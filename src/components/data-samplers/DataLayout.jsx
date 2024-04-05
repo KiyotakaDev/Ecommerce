@@ -9,7 +9,7 @@ import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Modal from "../sub/Modal";
-import BtnHandler from "../sub/BtnHandler";
+import ModalButtons from "../sub/ModalButtons";
 
 const DataLayout = () => {
   const data = useDataStore();
@@ -113,11 +113,11 @@ const DataLayout = () => {
       )}
       <Modal isOpen={showModal} cancel={handleCancel}>
         {objName === "root" ? (
-          <BtnHandler id={0} action={{ cancel: handleCancel }} />
+          <ModalButtons id={0} action={{ cancel: handleCancel }} />
         ) : mapper.length === 2 && field === "Admin" ? (
-          <BtnHandler id={1} action={{ cancel: handleCancel }} />
+          <ModalButtons id={1} action={{ cancel: handleCancel }} />
         ) : (
-          <BtnHandler
+          <ModalButtons
             id={2}
             action={{
               confirm: handleConfirm,
