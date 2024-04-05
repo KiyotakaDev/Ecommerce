@@ -1,21 +1,40 @@
 import { ArrowUpOnSquareIcon } from "@heroicons/react/24/outline";
-import React from "react";
 import { toast } from "react-toastify";
 
 const InputFields = (props) => {
-  const [images, setImages] = props.useState([]);
+  const { images, setImages } = props.image;
   const CustomInput = props.html;
+
+  const max_file_size = 1024 * 1024 * 5; // 5MB in Bits
+  const image_types = ["image/jpeg", "image/jpg", "image/png"];
 
   if (props.type === "file") {
     const uploadImages = (e) => {
-      const files = Array.from(e.target?.files)
-      if (files.length > 4 || images > 4) {
-        toast.error("Max 4 images")
+      const files = Array.from(e.target.files);
+      const errors = []
+
+      files.forEach((file, index) => {
+        const size = file.size
+        const type = file.type
+        if (!image_types.includes(type)) errors.push(`File ${index + 1}: Only .jpeg, .jpg and .png are allowed`)
+        if (size >= max_file_size) errors.push(`File ${index + 1}: Max siz allowed is 5MB`)
+      })
+
+      if (errors.length > 0) {
+        errors.forEach((error) => toast.error(error))
         return
       }
 
-      setImages(prev => [...prev, ...files])
-    }
+      if (files.length === 0) {
+        toast.error("Image is required")
+        return
+      }
+      if (files.length > 4 || images.length > 3) {
+        toast.error("Max 4 images")
+        return
+      }
+      setImages((prev) => [...prev, ...files]);
+    };
 
     return (
       <>
@@ -46,7 +65,7 @@ const InputFields = (props) => {
                 type={props.type}
                 name={props.label}
                 multiple
-                accept="image/*"
+                accept="image/jpg, image/jpeg, image/png"
                 className="hidden"
                 onChange={uploadImages}
               />
