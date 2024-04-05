@@ -31,7 +31,15 @@ const Products = () => {
   }, [setData]);
 
   return (
-    <Animation>{isLoading ? <div>Is loading</div> : <DataLayout />}</Animation>
+    <>
+      {isLoading ? (
+        <div className="text-4xl">Is loading</div>
+      ) : (
+        <Animation>
+          <DataLayout />
+        </Animation>
+      )}
+    </>
   );
 };
 

@@ -31,9 +31,15 @@ const AdminsPage = () => {
   }, [setData]);
 
   return (
-    <Animation>
-      {isLoading ? <div className="text-4xl">Is loading</div> : <DataLayout />}
-    </Animation>
+    <>
+      {isLoading ? (
+        <div className="text-4xl">Is loading</div>
+      ) : (
+        <Animation>
+          <DataLayout />
+        </Animation>
+      )}
+    </>
   );
 };
 
