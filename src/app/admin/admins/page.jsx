@@ -1,37 +1,40 @@
-'use client'
+"use client";
 
-import Animation from '@/components/Animation'
-import DataLayout from '@/components/data-samplers/DataLayout'
-import axios from 'axios'
-import { useEffect } from 'react'
-import { useDataStore } from '@/store/store'
+import Animation from "@/components/Animation";
+import DataLayout from "@/components/data-samplers/DataLayout";
+import axios from "axios";
+import { useEffect } from "react";
+import { useDataStore } from "@/store/store";
 
 const AdminsPage = () => {
-  const { setData, setMapper } = useDataStore()
+  const { setData, setMapper, isLoading, setLoading } = useDataStore();
 
   useEffect(() => {
     const getAdmins = async () => {
       try {
-        const response = await axios.get('/api/admins')
-        const admins = response.data
+        setLoading(true);
+        const response = await axios.get("/api/admins");
+        const admins = response.data;
         const dataToStore = {
           link: "admins/new",
-          field: "Admin"
-        }
-        setData(dataToStore)
-        setMapper(admins)
+          field: "Admin",
+        };
+        setData(dataToStore);
+        setMapper(admins);
       } catch (error) {
         console.log(error);
+      } finally {
+        setLoading(false);
       }
-    }
-    getAdmins()
-  }, [setData])
-  
+    };
+    getAdmins();
+  }, [setData]);
+
   return (
     <Animation>
-      <DataLayout />
+      {isLoading ? <div className="text-4xl">Is loading</div> : <DataLayout />}
     </Animation>
-  )
-}
+  );
+};
 
-export default AdminsPage
+export default AdminsPage;

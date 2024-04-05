@@ -7,30 +7,31 @@ import { useEffect } from "react";
 import { useDataStore } from "@/store/store";
 
 const Products = () => {
-  const { setData, setMapper } = useDataStore();
+  const { setData, setMapper, isLoading, setLoading } = useDataStore();
 
   useEffect(() => {
     const getProducts = async () => {
       try {
+        setLoading(true);
         const response = await axios.get("/api/products");
-        const products = response.data
+        const products = response.data;
         const dataToStore = {
           link: "products/new",
-          field: "Product"
-        }
-        setMapper(products)
+          field: "Product",
+        };
+        setMapper(products);
         setData(dataToStore);
       } catch (error) {
         console.log(error.message);
+      } finally {
+        setLoading(false);
       }
     };
     getProducts();
   }, [setData]);
 
   return (
-    <Animation>
-      <DataLayout />
-    </Animation>
+    <Animation>{isLoading ? <div>Is loading</div> : <DataLayout />}</Animation>
   );
 };
 

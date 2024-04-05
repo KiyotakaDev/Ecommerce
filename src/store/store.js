@@ -5,11 +5,10 @@ export const useDataStore = create((set) => ({
   mapper: [],
   link: "",
   field: "",
+  isLoading: false,
 
   // Functions
   setMapper: (mapper) => set({ mapper: mapper }),
   setData: (data) => set({ link: data.link, field: data.field }),
-  handleDelete: () => {
-    
-  }
+  setLoading: (loading) => set({ isLoading: loading })
 }))
