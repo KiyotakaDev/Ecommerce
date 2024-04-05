@@ -7,10 +7,10 @@ import { useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import InputFields from "./InputFields";
-import { useRouter } from 'next/navigation'
+import { useRouter } from "next/navigation";
 
 const FormLayout = ({ formProps }) => {
-  const router = useRouter()
+  const router = useRouter();
   const [price, setPrice] = useState(0);
 
   const { id, pTitle, pMapper } = formProps;
@@ -28,18 +28,18 @@ const FormLayout = ({ formProps }) => {
           return toast.error("Passwords do not match");
         }
 
-        const validator = zodAdmin.safeParse(newData)
+        const validator = zodAdmin.safeParse(newData);
         if (!validator.success) {
-          const errors = validator.error.formErrors.fieldErrors
+          const errors = validator.error.formErrors.fieldErrors;
           for (const err in errors) {
-            toast.error(errors[err][0])
+            toast.error(errors[err][0]);
           }
-          return
+          return;
         }
 
         const response = await axios.post("/api/admin/new", newData);
         if (response.status === 200) {
-          router.push("/admin/admins")
+          router.push("/admin/admins");
         }
         toast.success(response.data);
       } catch (error) {
@@ -62,8 +62,10 @@ const FormLayout = ({ formProps }) => {
         }
       }
 
-      router.push('/admin/products')
-      return addProduct(formData);
+      const response = await addProduct(formData);
+      if (response === 200) {
+        router.push("/admin/products");
+      }
     }
   };
 
@@ -76,9 +78,15 @@ const FormLayout = ({ formProps }) => {
           return (
             <div key={index}>
               {id === "admins" ? (
-                  <InputFields {...field} />
+                <InputFields {...field} />
               ) : id === "products" ? (
-                  <InputFields {...field} price={price} setPrice={setPrice} />
+                <InputFields
+                  {...field}
+                  price={price}
+                  setPrice={setPrice}
+                  useState={useState}
+                  toast={toast}
+                />
               ) : null}
             </div>
           );
