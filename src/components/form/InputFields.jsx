@@ -17,7 +17,7 @@ const InputFields = (props) => {
         const size = file.size
         const type = file.type
         if (!image_types.includes(type)) errors.push(`File ${index + 1}: Only .jpeg, .jpg and .png are allowed`)
-        if (size >= max_file_size) errors.push(`File ${index + 1}: Max siz allowed is 5MB`)
+        if (size >= max_file_size) errors.push(`File ${index + 1}: Max size allowed is 5MB`)
       })
 
       if (errors.length > 0) {
