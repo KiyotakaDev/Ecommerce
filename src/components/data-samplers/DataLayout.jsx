@@ -1,4 +1,4 @@
-import { useDataStore } from "@/store/store";
+import { useDataStore } from "@/store/dataStore";
 import Link from "next/link";
 import {
   InformationCircleIcon,

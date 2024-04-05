@@ -4,7 +4,7 @@ import Animation from "@/components/Animation";
 import DataLayout from "@/components/data-samplers/DataLayout";
 import axios from "axios";
 import { useEffect } from "react";
-import { useDataStore } from "@/store/store";
+import { useDataStore } from "@/store/dataStore";
 import MainLoader from "@/components/loaders/MainLoader";
 
 const AdminsPage = () => {
