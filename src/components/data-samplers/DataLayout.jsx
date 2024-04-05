@@ -73,7 +73,7 @@ const DataLayout = ({ dataProps }) => {
       <Modal isOpen={showModal} cancel={cancelDelete}>
         {selected === "root" ? (
           <BtnHandler id={0} action={{ cancel: cancelDelete }} />
-        ) : pMapper.length === 2 ? (
+        ) : pMapper.length === 2 && pField === 'Admin' ? (
           <BtnHandler id={1} action={{ cancel: cancelDelete }} />
         ) : (
           <BtnHandler
