@@ -5,6 +5,7 @@ import DataLayout from "@/components/data-samplers/DataLayout";
 import axios from "axios";
 import { useEffect } from "react";
 import { useDataStore } from "@/store/store";
+import MainLoader from "@/components/loaders/MainLoader";
 
 const AdminsPage = () => {
   const { setData, setMapper, isLoading, setLoading } = useDataStore();
@@ -33,7 +34,7 @@ const AdminsPage = () => {
   return (
     <>
       {isLoading ? (
-        <div className="text-4xl">Is loading</div>
+        <MainLoader />
       ) : (
         <Animation>
           <DataLayout />
