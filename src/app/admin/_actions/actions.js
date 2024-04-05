@@ -41,6 +41,7 @@ export async function addProduct(formData) {
         price: data.price
       },
     });
+    return 200
   } catch (error) {
     console.log("Error adding product: ", error.message);
   }
