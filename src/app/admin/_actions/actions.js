@@ -14,7 +14,7 @@ export async function addProduct(formData) {
     };
     const validateFields = zodProduct.safeParse(newData);
     if (!validateFields.success) {
-      return validateFields.error.formErrors.fieldErrors;
+      return { errors: validateFields.error.formErrors.fieldErrors };
     }
 
     const data = validateFields.data;
@@ -44,6 +44,6 @@ export async function addProduct(formData) {
     });
     return 200;
   } catch (error) {
-    console.log("Error adding product: ", error.message);
+    console.log(error);
   }
 }
