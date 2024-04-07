@@ -96,7 +96,10 @@ const DataLayout = () => {
                         </div>
                       ) : (
                         <div className="flex justify-evenly items-center">
-                          <button className="bg-slate-400 hover:bg-slate-500 transition-colors duration-200 ease-in-out w-full flex justify-center items-center action-btn">
+                          <button
+                            onClick={() => showActions(data.id, validation)}
+                            className="bg-slate-400 hover:bg-slate-500 transition-colors duration-200 ease-in-out w-full flex justify-center items-center action-btn"
+                          >
                             <InformationCircleIcon className="w-6 h-6" />
                           </button>
                         </div>
