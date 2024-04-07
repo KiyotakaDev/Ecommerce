@@ -40,6 +40,7 @@ const DataLayout = () => {
     handleDelete(objToDelete);
     setObjToDelete(null);
     setName("");
+    setShowModal(false)
   };
 
   const handleDelete = async (id) => {
