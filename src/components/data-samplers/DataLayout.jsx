@@ -26,6 +26,7 @@ const DataLayout = () => {
     objToDelete,
     setName,
     objName,
+    setId
   } = data;
   const { resetProduct } = useInputStore()
   useEffect(() => {
@@ -88,7 +89,8 @@ const DataLayout = () => {
                       {username !== "root" || product ? (
                         <div className="flex justify-evenly">
                           <Link
-                            href={`${type}s/edit/${data.id}`}
+                            onClick={() => setId(data.id)}
+                            href={`${type}s/edit/${data.product}`}
                             className="action-btn bg-yellow-500"
                           >
                             <PencilSquareIcon className="w-5 h-5" />
