@@ -1,11 +1,20 @@
-import { create } from 'zustand'
+import { create } from "zustand";
 
 export const useInputStore = create((set) => ({
   // Initial state
-  price: 0,
+  productFormData: {
+    product: "",
+    images: [],
+    description: "",
+    price: 0,
+  },
   images: [],
+  isLoading: false,
 
   // Functions
-  setPrice: (amount) => set({ price: amount }),
-  setImages: (image) => set((state) => ({ images: [...state.images, ...image]})),
-}))
+  setProductFormData: (data) =>
+    set((state) => ({ productFormData: { ...state.productFormData, ...data } })),
+  setIsLoading: (bool) => set({ isLoading: bool }),
+  setImages: (image) =>
+    set((state) => ({ images: [...state.images, ...image] })),
+}));
