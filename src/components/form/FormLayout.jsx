@@ -5,20 +5,26 @@ import "react-toastify/dist/ReactToastify.css";
 import InputFields from "./InputFields";
 import { addProduct } from "@/app/admin/_actions/actions";
 import { useInputStore } from "@/store/inputStore";
+import { useDataStore } from '@/store/dataStore'
 import { useRouter } from 'next/navigation'
 
 const FormLayout = ({ formProps }) => {
   const router = useRouter()
   const { id, pMapper, pTitle } = formProps;
   const { images: inputImages } = useInputStore();
+  const { id: productID } = useDataStore
+
+  const editing = pTitle.includes("Edit")
 
   const handler = async (formData) => {
     if (id === "products") {
       try {
-        inputImages.forEach((image) => {
-          formData.append("images", image);
-        });
-        const response = await addProduct(formData);
+        console.log(formData);
+          inputImages.forEach((image) => {
+            formData.append("images", image);
+          });
+        
+        const response = await addProduct(formData, editing, productID);
         if (response.errors) {
           const errors = response.errors;
           for (const error in errors) {
@@ -44,9 +50,9 @@ const FormLayout = ({ formProps }) => {
         {pMapper.map((field, index) => (
           <div key={index} className="flex">
             {id === "admins" ? (
-              <InputFields {...field} />
+              <InputFields {...field} editing={editing} />
             ) : (
-              <InputFields {...field} />
+              <InputFields {...field} editing={editing} />
             )}
           </div>
         ))}
