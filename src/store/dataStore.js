@@ -9,6 +9,7 @@ export const useDataStore = create((set) => ({
   showModal: false,
   objToDelete: null, // id
   objName: "",
+  id: null,
 
   // Functions
   setMapper: (mapper) => set({ mapper: mapper }),
@@ -17,4 +18,5 @@ export const useDataStore = create((set) => ({
   setShowModal: (show) => set({ showModal: show }),
   setObjToDelete: (obj) => set({ objToDelete: obj}),
   setName: (obj) => set({ objName: obj }),
+  setId: (id) => set({ id })
 }))
