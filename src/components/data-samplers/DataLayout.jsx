@@ -71,14 +71,14 @@ const DataLayout = () => {
             </thead>
             <tbody>
               {mapper.map((data, index) => {
-                const { username, name } = data;
-                const validation = username ? username : name;
+                const { username, product } = data;
+                const validation = username ? username : product;
 
                 return (
                   <tr key={index}>
                     <td>{validation}</td>
                     <td>
-                      {username !== "root" || name ? (
+                      {username !== "root" || product ? (
                         <div className="flex justify-evenly">
                           <Link
                             href={`${type}s/edit/${data.id}`}
