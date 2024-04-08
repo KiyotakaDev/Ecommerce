@@ -1,6 +1,7 @@
 import { useInputStore } from "@/store/inputStore";
 import { toast } from "react-toastify";
 import { ArrowUpOnSquareIcon } from "@heroicons/react/24/outline";
+import { useEffect } from "react";
 
 const InputFields = (props) => {
   const { html: CustomTag, label, title, type, placeholder, editing } = props;
@@ -38,9 +39,16 @@ const InputFields = (props) => {
       toast.error("Max 4 images");
       return;
     }
-    setImages(files);
+    if (productFormData) {
+      setImages([...productFormData.imagesPath, ...files])
+    } else {
+      setImages(files)
+    }
   };
-
+  useEffect(() => {
+    if (editing) setImages(productFormData.imagesPath)
+  }, [])
+  
   const handleFormInputs = (e) => {
     const { value } = e.target;
     setProductFormData({ [label]: value });
