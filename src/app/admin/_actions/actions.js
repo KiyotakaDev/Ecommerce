@@ -4,7 +4,7 @@ import db from "@/utils/prisma";
 import fs from "fs/promises";
 import { zodProduct } from "@/utils/schemas";
 
-export async function addProduct(formData) {
+export async function addProduct(formData, editing, productID) {
   try {
     const newData = {
       product: formData.get("product"),
@@ -22,8 +22,8 @@ export async function addProduct(formData) {
     let imagesPath = [];
 
     await fs.mkdir("public/products", { recursive: true });
-
-    for (let i = 0; i < data.images.length; i++) {
+    const newImages = data.images.filter((img) => typeof img === "object")
+    for (let i = 0; i < newImages.length; i++) {
       const img = data.images[i];
       const uuid = crypto.randomUUID();
       const imgPath = `/products/${uuid}-${img.name}`;
@@ -34,14 +34,26 @@ export async function addProduct(formData) {
       );
     }
 
-    await db.product.create({
-      data: {
-        product: data.product,
-        imagesPath,
-        description: data.description,
-        price: data.price,
-      },
-    });
+    if (!editing) {
+      await db.product.create({
+        data: {
+          product: data.product,
+          imagesPath,
+          description: data.description,
+          price: data.price,
+        },
+      });
+    } else {
+      await db.product.update({
+        where: { id: productID },
+        data: {
+          product: data.product,
+          imagesPath,
+          description: data.description,
+          price: data.price,
+        },
+      })
+    }
     return 200;
   } catch (error) {
     console.log(error);
