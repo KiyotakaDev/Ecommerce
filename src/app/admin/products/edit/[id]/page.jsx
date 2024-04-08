@@ -4,22 +4,22 @@ import Animation from "@/components/Animation";
 import FormLayout from "@/components/form/FormLayout";
 import { addProductFields } from "@/constants";
 import { useParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import axios from "axios";
 import MainLoader from "@/components/loaders/MainLoader";
+import { useInputStore } from "@/store/inputStore";
 
 const AddProduct = () => {
   const { id } = useParams();
-
-  const [product, setProduct] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
+  const { setProductFormData, isLoading, setIsLoading } = useInputStore()
+  
   useEffect(() => {
     const getProduct = async () => {
       try {
         setIsLoading(true);
         const response = await axios.get(`/api/product/${id}`);
         const data = response.data.data;
-        setProduct(data);
+        setProductFormData(data);
         setIsLoading(false);
       } catch (error) {
         console.log(error.message);
@@ -39,7 +39,6 @@ const AddProduct = () => {
               id: "products",
               pTitle: "Edit Product",
               pMapper: addProductFields,
-              pData: product,
             }}
           />
         </Animation>
