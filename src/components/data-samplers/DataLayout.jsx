@@ -1,4 +1,5 @@
 import { useDataStore } from "@/store/dataStore";
+import { useInputStore } from '@/store/inputStore'
 import Link from "next/link";
 import {
   InformationCircleIcon,
@@ -10,6 +11,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Modal from "../sub/Modal";
 import ModalButtons from "../sub/ModalButtons";
+import { useEffect } from "react";
 
 const DataLayout = () => {
   const data = useDataStore();
@@ -25,6 +27,11 @@ const DataLayout = () => {
     setName,
     objName,
   } = data;
+  const { resetProduct } = useInputStore()
+  useEffect(() => {
+    resetProduct()
+  }, [])
+  
 
   const type = field.toLowerCase();
 
