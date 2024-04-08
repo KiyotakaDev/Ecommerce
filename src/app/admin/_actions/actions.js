@@ -36,7 +36,7 @@ export async function addProduct(formData) {
 
     await db.product.create({
       data: {
-        name: data.product,
+        product: data.product,
         imagesPath,
         description: data.description,
         price: data.price,
