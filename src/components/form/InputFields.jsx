@@ -4,7 +4,7 @@ import { ArrowUpOnSquareIcon } from "@heroicons/react/24/outline";
 
 const InputFields = (props) => {
   const { html: CustomTag, label, title, type, placeholder } = props;
-  const { price, setPrice, images, setImages } = useInputStore();
+  const { images, setImages, setProductFormData, productFormData } = useInputStore();
 
   const maxFileSize = 1024 * 1024 * 5; // 5MB in Bits
   const imageTypes = ["image/jpeg", "image/jpg", "image/png"];
@@ -39,6 +39,12 @@ const InputFields = (props) => {
     }
     setImages(files);
   };
+
+  const handleFormInputs = (e) => {
+    const { value } = e.target
+    setProductFormData({ [label]: value })
+    console.log(productFormData);
+  }
 
   if (type === "file") {
     return (
@@ -85,14 +91,13 @@ const InputFields = (props) => {
         type={type}
         name={label}
         placeholder={placeholder}
-        {...(type == "number"
-          ? { onChange: (e) => setPrice(e.target.value) }
-          : {})}
+        {...(productFormData ? { value: productFormData[label] } : {})}
+        onChange={(e) => handleFormInputs(e)}
         className="input-fields"
       />
       {type == "number" ? (
         <span className="-mt-2 font-semibold text-teal-700/60">
-          ${price / 100}
+          ${productFormData.price / 100}
         </span>
       ) : null}
     </div>
