@@ -1,35 +1,47 @@
 import { NextResponse } from "next/server";
 import db from "@/utils/prisma";
 import bcrypt from "bcrypt";
+import { zodAdmin } from "@/utils/schemas";
 
 export async function POST(request) {
   try {
-    const { username, email, password } = await request.json()
+    let errors = [];
+    const client = await request.json();
+    if (client.password !== client.confirm_password)
+      errors.push("Password do not match");
 
-    let errors = []
+    const validateFields = zodAdmin.safeParse(client);
+    if (!validateFields.success) {
+      const fieldErrors = validateFields.error.formErrors.fieldErrors;
+      for (const err in fieldErrors) {
+        errors.push(fieldErrors[err][0]);
+      }
+    }
 
     const userFound = await db.admin.findUnique({
       where: {
-        username: username,
+        username: client.username,
       },
     });
     if (userFound) errors.push("Username already exists")
     const emailFound = await db.admin.findUnique({
       where: {
-        email: email,
+        email: client.email,
       },
     });
     if (emailFound) errors.push("Email is already in use")
-    
-    // Sending errors array
-    if (userFound || emailFound) return NextResponse.json(errors, { status: 409 })
-    
 
-    const passwordHash = await bcrypt.hash(password, 10);
+    if (errors.length > 0)
+      return NextResponse.json({ errors }, { status: 409 });
+ 
+    // OK 
+    const data = validateFields.data
+
+    const passwordHash = await bcrypt.hash(data.password, 10);
     const newUser = await db.admin.create({
       data: {
-        username: username,
-        email: email,
+        username: data.username,
+        email: data.email,
         password: passwordHash,
       },
     });
