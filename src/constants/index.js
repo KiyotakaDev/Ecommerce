@@ -1,7 +1,8 @@
-import { ArchiveBoxIcon, UserGroupIcon } from "@heroicons/react/24/outline";
+import { ArchiveBoxIcon, UserGroupIcon, ListBulletIcon } from "@heroicons/react/24/outline";
 
 const navLinks = [
   { name: "Products", to: "/admin/products", icon: ArchiveBoxIcon },
+  { name: "Categories", to: "/admin/categories", icon: ListBulletIcon },
   { name: "Admins", to: "/admin/admins", icon: UserGroupIcon },
 ];
 
@@ -65,5 +66,14 @@ const addProductFields = [
     placeholder: "0",
   },
 ];
+const addCategoryFields = [
+  {
+    html: "input",
+    type: "text",
+    label: "category",
+    title: "New category",
+    placeholder: "Category name",
+  },
+]
 
-export { navLinks, addAdminFields, addProductFields };
+export { navLinks, addAdminFields, addProductFields, addCategoryFields };
