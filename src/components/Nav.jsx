@@ -11,7 +11,7 @@ const Nav = () => {
   return (
     <aside className="py-4 pl-4">
       <div className="p-4 font-bold text-xl tracking-wider w-40 gap-2 cursor-default">
-        <p>Kiyota</p>
+        <p>root</p>
       </div>
 
       <nav className="flex flex-col gap-2">
