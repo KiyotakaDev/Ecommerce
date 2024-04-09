@@ -10,7 +10,7 @@ import "react-toastify/dist/ReactToastify.css";
 const CategoriesPage = () => {
   const [name, setName] = useState("");
   const [categories, setCategories] = useState([]);
-  const [parent, setParent] = useState('');
+  const [parent, setParent] = useState("");
   const [isLoading, setisLoading] = useState(false);
 
   useEffect(() => {
@@ -20,7 +20,18 @@ const CategoriesPage = () => {
     try {
       setisLoading(true);
       const response = await axios.get("/api/categories");
-      setCategories(response.data);
+      const categoriesWithParentNames = await Promise.all(
+        response.data.map(async (category) => {
+          if (category.parent) {
+            const parentCategory = await axios.get(
+              `/api/category/${category.parent}`
+            );
+            return { ...category, parentName: parentCategory.data.name };
+          }
+          return category;
+        })
+      );
+      setCategories(categoriesWithParentNames);
       setisLoading(false);
     } catch (error) {
       console.log(error);
@@ -32,8 +43,8 @@ const CategoriesPage = () => {
     try {
       const data = {
         category: name,
-        parent: parent
-      }
+        parent: parent,
+      };
       console.log(data);
       await axios.post("/api/category/new", data);
       setName("");
@@ -89,6 +100,7 @@ const CategoriesPage = () => {
             <thead>
               <tr>
                 <td>Category name</td>
+                <td>Parent category</td>
               </tr>
             </thead>
             <tbody>
@@ -96,6 +108,7 @@ const CategoriesPage = () => {
                 categories.map((category, index) => (
                   <tr key={index}>
                     <td>{category.name}</td>
+                    <td>{category.parent ? category.parentName : "None"}</td>
                   </tr>
                 ))}
             </tbody>
