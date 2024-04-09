@@ -25,7 +25,7 @@ export async function POST(request) {
     const newCategory = await db.category.create({
       data: {
         name: category,
-        parent: parent 
+        parent: parseInt(parent) 
       }
     })
 
