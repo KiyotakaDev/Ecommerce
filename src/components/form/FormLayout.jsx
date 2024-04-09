@@ -5,24 +5,25 @@ import "react-toastify/dist/ReactToastify.css";
 import InputFields from "./InputFields";
 import { addProduct } from "@/app/admin/_actions/actions";
 import { useInputStore } from "@/store/inputStore";
-import { useDataStore } from '@/store/dataStore'
-import { useRouter } from 'next/navigation'
+import { useDataStore } from "@/store/dataStore";
+import { useRouter } from "next/navigation";
+import axios from 'axios'
+import { zodAdmin } from "@/utils/schemas";
 
 const FormLayout = ({ formProps }) => {
-  const router = useRouter()
+  const router = useRouter();
   const { id, pMapper, pTitle } = formProps;
   const { images: inputImages } = useInputStore();
-  const { id: productID } = useDataStore
+  const { id: productID } = useDataStore;
 
-  const editing = pTitle.includes("Edit")
-
+  const editing = pTitle.includes("Edit");
+  
   const handler = async (formData) => {
     if (id === "products") {
       try {
-        console.log(formData);
-          inputImages.forEach((image) => {
-            formData.append("images", image);
-          });
+        inputImages.forEach((image) => {
+          formData.append("images", image);
+        });
         
         const response = await addProduct(formData, editing, productID);
         if (response.errors) {
@@ -31,14 +32,28 @@ const FormLayout = ({ formProps }) => {
             toast.error(errors[error][0]);
           }
         } else if (response === 200) {
-          router.push('/admin/products')
+          router.push("/admin/products");
         }
       } catch (error) {
         console.log(error);
       }
     } else if (id === "admins") {
       try {
-      } catch (error) {}
+        const newData = {
+          username: formData.get('username'),
+          email: formData.get('email'),
+          password: formData.get('password'),
+          confirm_password: formData.get('confirm_password')
+        }
+
+        const response = await axios.post('/api/admin/new', newData)
+        if (response.status === 200) {
+          router.push('/admin/admins')
+        }
+      } catch (error) {
+        const backErrors = error.response.data.errors
+        backErrors.forEach((err) => toast.error(err))
+      }
     }
   };
 
