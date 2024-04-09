@@ -7,7 +7,7 @@ import { addProduct } from "@/app/admin/_actions/actions";
 import { useInputStore } from "@/store/inputStore";
 import { useDataStore } from "@/store/dataStore";
 import { useRouter } from "next/navigation";
-import axios from 'axios'
+import axios from "axios";
 import { zodAdmin } from "@/utils/schemas";
 
 const FormLayout = ({ formProps }) => {
@@ -17,14 +17,14 @@ const FormLayout = ({ formProps }) => {
   const { id: productID } = useDataStore;
 
   const editing = pTitle.includes("Edit");
-  
+
   const handler = async (formData) => {
     if (id === "products") {
       try {
         inputImages.forEach((image) => {
           formData.append("images", image);
         });
-        
+
         const response = await addProduct(formData, editing, productID);
         if (response.errors) {
           const errors = response.errors;
@@ -40,19 +40,19 @@ const FormLayout = ({ formProps }) => {
     } else if (id === "admins") {
       try {
         const newData = {
-          username: formData.get('username'),
-          email: formData.get('email'),
-          password: formData.get('password'),
-          confirm_password: formData.get('confirm_password')
-        }
+          username: formData.get("username"),
+          email: formData.get("email"),
+          password: formData.get("password"),
+          confirm_password: formData.get("confirm_password"),
+        };
 
-        const response = await axios.post('/api/admin/new', newData)
+        const response = await axios.post("/api/admin/new", newData);
         if (response.status === 200) {
-          router.push('/admin/admins')
+          router.push("/admin/admins");
         }
       } catch (error) {
-        const backErrors = error.response.data.errors
-        backErrors.forEach((err) => toast.error(err))
+        const backErrors = error.response.data.errors;
+        backErrors.forEach((err) => toast.error(err));
       }
     }
   };
@@ -64,11 +64,7 @@ const FormLayout = ({ formProps }) => {
       <form action={handler}>
         {pMapper.map((field, index) => (
           <div key={index} className="flex">
-            {id === "admins" ? (
-              <InputFields {...field} editing={editing} />
-            ) : (
-              <InputFields {...field} editing={editing} />
-            )}
+            <InputFields {...field} editing={editing} />
           </div>
         ))}
         <button type="submit" className="app-btn mt-3">
