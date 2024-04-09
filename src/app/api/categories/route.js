@@ -5,7 +5,7 @@ export async function GET() {
   try {
     const users = await db.category.findMany({
       orderBy: {
-        name: "asc"
+        id: "asc"
       }
     })
     return NextResponse.json(users)

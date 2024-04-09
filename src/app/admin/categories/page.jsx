@@ -59,6 +59,10 @@ const CategoriesPage = () => {
     }
   };
 
+  const editCategory = (id) => {
+    console.log(id);
+  }
+
   return (
     <>
       {isLoading ? (
@@ -101,6 +105,7 @@ const CategoriesPage = () => {
               <tr>
                 <td>Category name</td>
                 <td>Parent category</td>
+                <td>Actions</td>
               </tr>
             </thead>
             <tbody>
@@ -109,6 +114,17 @@ const CategoriesPage = () => {
                   <tr key={index}>
                     <td>{category.name}</td>
                     <td>{category.parent ? category.parentName : "None"}</td>
+                    <td className="flex justify-evenly w-full gap-4">
+                      <button
+                        onClick={() => editCategory(category.id)}
+                        className="action-btn bg-yellow-500 w-full"
+                      >
+                        Edit
+                      </button>
+                      <button className="action-btn bg-red-500 text-white w-full">
+                        Delete
+                      </button>
+                    </td>
                   </tr>
                 ))}
             </tbody>
