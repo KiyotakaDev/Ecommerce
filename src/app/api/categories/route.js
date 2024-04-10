@@ -18,7 +18,7 @@ export async function PUT(request) {
   try {
     const data = await request.json();
     const category = data.category.trim();
-    const parent = data.parent.trim();
+    const parent = data.parent;
     const id = data.id
 
     if (!category)
