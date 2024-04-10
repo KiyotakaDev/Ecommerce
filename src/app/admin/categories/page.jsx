@@ -87,7 +87,7 @@ const CategoriesPage = () => {
       setEditing(null);
       setName("");
       setParent("");
-      setProperties([])
+      setProperties([]);
       getCategories();
     } catch (error) {
       if (error.response.data.errors) {
@@ -103,10 +103,12 @@ const CategoriesPage = () => {
     setEditing(category);
     setName(category.name);
     setParent(category.parent);
-    setProperties(category.properties.map(({ name, values }) => ({
-      name,
-      values: values.join(',')
-    })))
+    setProperties(
+      category.properties.map(({ name, values }) => ({
+        name,
+        values: values.join(","),
+      }))
+    );
   };
 
   const addProperty = () => {
@@ -213,24 +215,25 @@ const CategoriesPage = () => {
                 ))}
             </div>
 
-            {editing && (
-              <div className="flex gap-2">
+            <div className="flex gap-2">
+              {editing && (
                 <button
                   type="button"
                   onClick={() => {
                     setEditing(null);
                     setName("");
                     setParent("");
+                    setProperties([]);
                   }}
                   className="app-btn mt-2 bg-slate-400 hover:bg-slate-600"
                 >
                   Cancel
                 </button>
-              </div>
-            )}
-                <button type="submit" className="app-btn mt-2">
-                  {editing ? "Edit" : "Save"}
-                </button>
+              )}
+              <button type="submit" className="app-btn mt-2">
+                {editing ? "Edit" : "Save"}
+              </button>
+            </div>
           </form>
           {!editing && (
             <table>
