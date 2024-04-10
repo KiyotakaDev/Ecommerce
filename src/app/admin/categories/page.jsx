@@ -17,6 +17,7 @@ const CategoriesPage = () => {
   const [showModal, setShowModal] = useState(false);
   const [objToDelete, setObjToDelete] = useState(null);
   const [objName, setObjName] = useState("");
+  const [properties, setProperties] = useState([]);
 
   useEffect(() => {
     getCategories();
@@ -53,10 +54,12 @@ const CategoriesPage = () => {
   const handleConfirm = async () => {
     try {
       await axios.delete(`/api/category/${objToDelete}`);
-      const filter = categories.filter((category) => category.id !== objToDelete);
+      const filter = categories.filter(
+        (category) => category.id !== objToDelete
+      );
       setCategories(filter);
-      setShowModal(false)
-      toast.success("Deleted!")
+      setShowModal(false);
+      toast.success("Deleted!");
     } catch (error) {
       console.log(error.message);
     }
@@ -67,19 +70,23 @@ const CategoriesPage = () => {
     try {
       const data = {
         category: name,
-        parent: parent,
+        parent,
+        properties: properties.map((p) => ({
+          name: p.name,
+          values: p.values.split(","),
+        })),
       };
       if (editing) {
         data.id = editing.id;
         await axios.put(`/api/categories`, data);
-        toast.success("Editing success!")
+        toast.success("Editing success!");
       } else {
         await axios.post("/api/category/new", data);
-        toast.success("Category added!")
+        toast.success("Category added!");
       }
       setEditing(null);
       setName("");
-      setParent("")
+      setParent("");
       getCategories();
     } catch (error) {
       if (error.response.data.errors) {
@@ -97,6 +104,34 @@ const CategoriesPage = () => {
     setParent(category.parent);
   };
 
+  const addProperty = () => {
+    setProperties((prev) => {
+      return [...prev, { name: "", values: "" }];
+    });
+  };
+
+  const upadetPropName = (newName, index, prop) => {
+    setProperties((prev) => {
+      const properties = [...prev];
+      properties[index].name = newName;
+      return properties;
+    });
+  };
+  const updatePropValues = (newValues, index, prop) => {
+    setProperties((prev) => {
+      const properties = [...prev];
+      properties[index].values = newValues;
+      return properties;
+    });
+  };
+  const removeProp = (indexToRemove) => {
+    setProperties((prev) => {
+      return [...prev].filter((prop, i) => {
+        return i !== indexToRemove;
+      });
+    });
+  };
+
   return (
     <>
       {isLoading ? (
@@ -109,67 +144,127 @@ const CategoriesPage = () => {
           <label className="text-teal-900 font-semibold text-lg">
             {editing ? `Edit category ${editing.name}` : "New Category"}
           </label>
-          <form onSubmit={saveCategory} className="flex gap-1">
-            <input
-              type="text"
-              value={name}
-              placeholder={"Category name"}
-              onChange={(e) => setName(e.target.value)}
-              className="mb-0 input-fields"
-            />
-            <select
-              value={parent}
-              onChange={(e) => setParent(e.target.value)}
-              className="input-fields mb-0"
-            >
-              <option value="">No parent category</option>
-              {categories.length > 0 &&
-                categories.map((category, index) => (
-                  <option key={index} value={category.id}>
-                    {category.name}
-                  </option>
+          <form onSubmit={saveCategory}>
+            <div className="flex gap-1">
+              <input
+                type="text"
+                value={name}
+                placeholder={"Category name"}
+                onChange={(e) => setName(e.target.value)}
+                className="mb-0 input-fields"
+              />
+              <select
+                value={parent}
+                onChange={(e) => setParent(e.target.value)}
+                className="input-fields mb-0"
+              >
+                <option value="">No parent category</option>
+                {categories.length > 0 &&
+                  categories.map((category, index) => (
+                    <option key={index} value={category.id}>
+                      {category.name}
+                    </option>
+                  ))}
+              </select>
+            </div>
+            <div className="mb-2">
+              <label className="block text-teal-900 font-semibold text-lg">
+                Properties
+              </label>
+              <button
+                type="button"
+                onClick={addProperty}
+                className="app-btn text-base bg-blue-400 hover:bg-blue-600"
+              >
+                Add Property
+              </button>
+              {properties.length > 0 &&
+                properties.map((prop, i) => (
+                  <div key={i} className="flex gap-2 mt-3 mb-3">
+                    <input
+                      type="text"
+                      value={prop.name}
+                      onChange={(e) => upadetPropName(e.target.value, i, prop)}
+                      placeholder="property name (example: color)"
+                      className="input-fields mb-0"
+                    />
+                    <input
+                      type="text"
+                      value={prop.values}
+                      onChange={(e) =>
+                        updatePropValues(e.target.value, i, prop)
+                      }
+                      placeholder="values, coma separated"
+                      className="input-fields mb-0"
+                    />
+                    <button
+                      onClick={() => removeProp(i)}
+                      type="button"
+                      className="app-btn text-base bg-red-500 hover:bg-red-600"
+                    >
+                      Remove
+                    </button>
+                  </div>
                 ))}
-            </select>
-            <button type="submit" className="app-btn">
-              {editing ? "Edit" : "Save"}
-            </button>
+            </div>
+
+            {editing && (
+              <div className="flex gap-2">
+                <button
+                  type="button"
+                  onClick={() => {
+                    setEditing(null);
+                    setName("");
+                    setParent("");
+                  }}
+                  className="app-btn mt-2 bg-slate-400 hover:bg-slate-600"
+                >
+                  Cancel
+                </button>
+              </div>
+            )}
+                <button type="submit" className="app-btn mt-2">
+                  {editing ? "Edit" : "Save"}
+                </button>
           </form>
-          <table>
-            <thead>
-              <tr>
-                <td>Category name</td>
-                <td>Parent category</td>
-                <td>Actions</td>
-              </tr>
-            </thead>
-            <tbody>
-              {categories.length > 0 &&
-                categories.map((category, index) => (
-                  <tr key={index}>
-                    <td>{category.name}</td>
-                    <td>{category.parent ? category.parentName : "None"}</td>
-                    <td className="flex justify-evenly w-full gap-4">
-                      <button
-                        onClick={() => editCategory(category)}
-                        className="action-btn bg-yellow-500 w-full"
-                      >
-                        Edit
-                      </button>
-                      <button
-                        onClick={() => {
-                          setShowModal(true);
-                          setObjName(category.name);
-                          setObjToDelete(category.id);
-                        }}
-                        className="action-btn bg-red-500 text-white w-full"
-                      >
-                        Delete
-                      </button>
-                    </td>
-                  </tr>
-                ))}
-            </tbody>
-          </table>
+          {!editing && (
+            <table>
+              <thead>
+                <tr>
+                  <td>Category name</td>
+                  <td>Parent category</td>
+                  <td>Actions</td>
+                </tr>
+              </thead>
+              <tbody>
+                {categories.length > 0 &&
+                  categories.map((category, index) => (
+                    <tr key={index}>
+                      <td>{category.name}</td>
+                      <td>{category.parent ? category.parentName : "None"}</td>
+                      <td className="flex justify-evenly w-full gap-4">
+                        <button
+                          onClick={() => editCategory(category)}
+                          className="action-btn bg-yellow-500 w-full"
+                        >
+                          Edit
+                        </button>
+                        <button
+                          onClick={() => {
+                            setShowModal(true);
+                            setObjName(category.name);
+                            setObjToDelete(category.id);
+                          }}
+                          className="action-btn bg-red-500 text-white w-full"
+                        >
+                          Delete
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+              </tbody>
+            </table>
+          )}
           <ToastContainer />
           <Modal isOpen={showModal} cancel={handleCancel}>
             <div>
@@ -180,10 +275,16 @@ const CategoriesPage = () => {
               </p>
             </div>
             <div className="flex justify-evenly items-center">
-              <button onClick={handleCancel} className="bg-gray-300 text-gray-800 px-4 py-2 rounded-md mt-8">
+              <button
+                onClick={handleCancel}
+                className="bg-gray-300 text-gray-800 px-4 py-2 rounded-md mt-8"
+              >
                 Cancel
               </button>
-              <button onClick={handleConfirm} className="bg-red-500 text-white px-4 py-2 rounded-md mt-8">
+              <button
+                onClick={handleConfirm}
+                className="bg-red-500 text-white px-4 py-2 rounded-md mt-8"
+              >
                 Yes
               </button>
             </div>
