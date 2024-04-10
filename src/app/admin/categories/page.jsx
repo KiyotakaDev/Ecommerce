@@ -87,6 +87,7 @@ const CategoriesPage = () => {
       setEditing(null);
       setName("");
       setParent("");
+      setProperties([])
       getCategories();
     } catch (error) {
       if (error.response.data.errors) {
@@ -102,6 +103,10 @@ const CategoriesPage = () => {
     setEditing(category);
     setName(category.name);
     setParent(category.parent);
+    setProperties(category.properties.map(({ name, values }) => ({
+      name,
+      values: values.join(',')
+    })))
   };
 
   const addProperty = () => {
