@@ -16,7 +16,6 @@ const ProductForm = ({
   price: existingPrice,
 }) => {
   const router = useRouter();
-  const [files, setFiles] = useState([]);
 
   const initialState = {
     product: existingProduct || "",
@@ -38,7 +37,9 @@ const ProductForm = ({
       } else {
         // Create
         const response = await axios.post("/api/product/new", productData);
-        console.log(response);
+        if (response.status === 200) {
+          router.push("/admin/products")
+        }
       }
     } catch (error) {
       console.log(error.response.data.error);
