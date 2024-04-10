@@ -6,6 +6,7 @@ export async function POST(request) {
     const data = await request.json();
     const category = data.category.trim();
     const parent = data.parent.trim();
+    const properties = data.properties
 
     if (!category)
       return NextResponse.json(
@@ -25,7 +26,8 @@ export async function POST(request) {
     const newCategory = await db.category.create({
       data: {
         name: category,
-        parent: parseInt(parent) 
+        parent: parseInt(parent),
+        properties,
       }
     })
 
