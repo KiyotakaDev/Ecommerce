@@ -2,6 +2,7 @@
 
 import Animation from "@/components/Animation";
 import MainLoader from "@/components/loaders/MainLoader";
+import Modal from "@/components/sub/Modal";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
@@ -12,10 +13,15 @@ const CategoriesPage = () => {
   const [categories, setCategories] = useState([]);
   const [parent, setParent] = useState("");
   const [isLoading, setisLoading] = useState(false);
+  const [editing, setEditing] = useState(null);
+  const [showModal, setShowModal] = useState(false);
+  const [objToDelete, setObjToDelete] = useState(null);
+  const [objName, setObjName] = useState("");
 
   useEffect(() => {
     getCategories();
   }, []);
+
   const getCategories = async () => {
     try {
       setisLoading(true);
@@ -38,6 +44,24 @@ const CategoriesPage = () => {
     }
   };
 
+  const handleCancel = () => {
+    setShowModal(false);
+    setObjName("");
+    setObjToDelete(null);
+  };
+
+  const handleConfirm = async () => {
+    try {
+      await axios.delete(`/api/category/${objToDelete}`);
+      const filter = categories.filter((category) => category.id !== objToDelete);
+      setCategories(filter);
+      setShowModal(false)
+      toast.success("Deleted!")
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
   const saveCategory = async (e) => {
     e.preventDefault();
     try {
@@ -45,9 +69,17 @@ const CategoriesPage = () => {
         category: name,
         parent: parent,
       };
-      console.log(data);
-      await axios.post("/api/category/new", data);
+      if (editing) {
+        data.id = editing.id;
+        await axios.put(`/api/categories`, data);
+        toast.success("Editing success!")
+      } else {
+        await axios.post("/api/category/new", data);
+        toast.success("Category added!")
+      }
+      setEditing(null);
       setName("");
+      setParent("")
       getCategories();
     } catch (error) {
       if (error.response.data.errors) {
@@ -59,9 +91,11 @@ const CategoriesPage = () => {
     }
   };
 
-  const editCategory = (id) => {
-    console.log(id);
-  }
+  const editCategory = (category) => {
+    setEditing(category);
+    setName(category.name);
+    setParent(category.parent);
+  };
 
   return (
     <>
@@ -73,7 +107,7 @@ const CategoriesPage = () => {
             Categories
           </h1>
           <label className="text-teal-900 font-semibold text-lg">
-            New Category
+            {editing ? `Edit category ${editing.name}` : "New Category"}
           </label>
           <form onSubmit={saveCategory} className="flex gap-1">
             <input
@@ -97,7 +131,7 @@ const CategoriesPage = () => {
                 ))}
             </select>
             <button type="submit" className="app-btn">
-              Save
+              {editing ? "Edit" : "Save"}
             </button>
           </form>
           <table>
@@ -116,12 +150,19 @@ const CategoriesPage = () => {
                     <td>{category.parent ? category.parentName : "None"}</td>
                     <td className="flex justify-evenly w-full gap-4">
                       <button
-                        onClick={() => editCategory(category.id)}
+                        onClick={() => editCategory(category)}
                         className="action-btn bg-yellow-500 w-full"
                       >
                         Edit
                       </button>
-                      <button className="action-btn bg-red-500 text-white w-full">
+                      <button
+                        onClick={() => {
+                          setShowModal(true);
+                          setObjName(category.name);
+                          setObjToDelete(category.id);
+                        }}
+                        className="action-btn bg-red-500 text-white w-full"
+                      >
                         Delete
                       </button>
                     </td>
@@ -130,6 +171,23 @@ const CategoriesPage = () => {
             </tbody>
           </table>
           <ToastContainer />
+          <Modal isOpen={showModal} cancel={handleCancel}>
+            <div>
+              <p>
+                Are you sure you want to{" "}
+                <span className="text-red-500">delete</span>{" "}
+                <span className="font-semibold">{objName}</span> category?
+              </p>
+            </div>
+            <div className="flex justify-evenly items-center">
+              <button onClick={handleCancel} className="bg-gray-300 text-gray-800 px-4 py-2 rounded-md mt-8">
+                Cancel
+              </button>
+              <button onClick={handleConfirm} className="bg-red-500 text-white px-4 py-2 rounded-md mt-8">
+                Yes
+              </button>
+            </div>
+          </Modal>
         </Animation>
       )}
     </>
