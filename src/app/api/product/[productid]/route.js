@@ -29,12 +29,19 @@ export async function GET(_, { params }) {
   }
 }
 
-export async function POST(_, { params }) {
+export async function PUT(request, { params }) {
   try {
-    const { productid } = params;
+    const { productid } = params
+    const { product, images, description, price } = await request.json()
     await db.product.update({
       where: {
         id: parseInt(productid)
+      },
+      data: {
+        product,
+        imagesPath: images,
+        description,
+        price
       }
     })
     return NextResponse.json("Product updated!")
