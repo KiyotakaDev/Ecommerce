@@ -1,46 +1,42 @@
 "use client";
 
-import Animation from "@/components/Animation";
-import FormLayout from "@/components/form/FormLayout";
-import { addProductFields } from "@/constants";
-import { useEffect } from "react";
-import axios from "axios";
 import MainLoader from "@/components/loaders/MainLoader";
-import { useInputStore } from "@/store/inputStore";
+import ProductForm from "@/components/form/ProductForm";
 import { useDataStore } from '@/store/dataStore'
+import Animation from "@/components/Animation";
+import { useState, useEffect } from "react";
+import axios from "axios";
 
 const AddProduct = () => {
-  const { id } = useDataStore();
-  const { setProductFormData, isLoading, setIsLoading } = useInputStore()
-  
+  const [productInfo, setProductInfo] = useState([])
+  const [isLoading, setIsLoading] = useState(false)
+  const { id } = useDataStore()
+
   useEffect(() => {
     const getProduct = async () => {
+      if (!id) return
       try {
-        setIsLoading(true);
-        const response = await axios.get(`/api/product/${id}`);
-        const data = response.data.data;
-        setProductFormData(data);
-        setIsLoading(false);
+        setIsLoading(true)
+        const response = await axios.get(`/api/product/${id}`)
+        setProductInfo(response.data.data)
+        setIsLoading(false)
       } catch (error) {
         console.log(error.message);
       }
-    };
-    getProduct();
-  }, []);
-
+    }
+    getProduct()
+  }, [id])
+  
   return (
     <>
       {isLoading ? (
         <MainLoader />
       ) : (
         <Animation>
-          <FormLayout
-            formProps={{
-              id: "products",
-              pTitle: "Edit Product",
-              pMapper: addProductFields,
-            }}
-          />
+          <h1 className="form-title">Edit product</h1>
+          {productInfo &&  (
+            <ProductForm {...productInfo} />
+          )}
         </Animation>
       )}
     </>
