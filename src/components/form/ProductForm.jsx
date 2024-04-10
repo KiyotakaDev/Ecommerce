@@ -19,7 +19,7 @@ const ProductForm = ({
 
   const initialState = {
     product: existingProduct || "",
-    imagesPath: [] || existingImages,
+    imagesPath: existingImages || [],
     description: existingDescription || "",
     price: existingPrice || 0,
   };
