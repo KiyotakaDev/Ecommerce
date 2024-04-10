@@ -24,4 +24,10 @@
   .input-fields {
     @apply border-2 border-gray-300 rounded-md px-2 py-1 w-full mb-2 focus:border-emerald-500;
   }
+  .form-title {
+    @apply text-teal-900 font-bold my-2 mb-4 text-3xl;
+  }
+  .form-label {
+    @apply text-teal-900 font-semibold text-lg;
+  }
 }
