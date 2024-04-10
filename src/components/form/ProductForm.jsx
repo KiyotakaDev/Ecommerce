@@ -3,19 +3,22 @@
 import { addProductFields } from "@/constants";
 import axios from "axios";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ArrowUpOnSquareIcon } from "@heroicons/react/24/outline";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useInputStore } from "@/store/inputStore";
 
-const ProductForm = ({
-  id,
-  product: existingProduct,
-  imagesPath: existingImages,
-  description: existingDescription,
-  price: existingPrice,
-}) => {
+const ProductForm = () => {
   const router = useRouter();
+  const { productInfo } = useInputStore();
+  const {
+    id,
+    product: existingProduct,
+    imagesPath: existingImages,
+    description: existingDescription,
+    price: existingPrice,
+  } = productInfo;
 
   const initialState = {
     product: existingProduct || "",
@@ -24,6 +27,9 @@ const ProductForm = ({
     price: existingPrice || 0,
   };
   const [productData, setProductData] = useState(initialState);
+  useEffect(() => {
+    setProductData(initialState);
+  }, []);
 
   const saveProduct = async (e) => {
     e.preventDefault();
@@ -38,11 +44,14 @@ const ProductForm = ({
         // Create
         const response = await axios.post("/api/product/new", productData);
         if (response.status === 200) {
-          router.push("/admin/products")
+          router.push("/admin/products");
         }
       }
     } catch (error) {
-      console.log(error.response.data.error);
+      console.log(error);
+      if (error.response) {
+        console.log(error.response.data.error);
+      }
     }
   };
 
