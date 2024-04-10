@@ -20,6 +20,7 @@ export async function PUT(request) {
     const category = data.category.trim();
     const parent = data.parent;
     const id = data.id
+    const properties = data.properties
 
     if (!category)
       return NextResponse.json(
@@ -33,7 +34,8 @@ export async function PUT(request) {
       },
       data: {
         name: category,
-        parent: parseInt(parent) 
+        parent: parseInt(parent),
+        properties
       }
     })
 
