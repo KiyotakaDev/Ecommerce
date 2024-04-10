@@ -45,13 +45,6 @@ const addProductFields = [
     placeholder: "e.g.camera",
   },
   {
-    html: "input",
-    type: "file",
-    label: "image",
-    title: "Images",
-    placeholder: "",
-  },
-  {
     html: "textarea",
     type: "text",
     label: "description",
