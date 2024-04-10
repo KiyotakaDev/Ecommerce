@@ -2,31 +2,32 @@
 
 import MainLoader from "@/components/loaders/MainLoader";
 import ProductForm from "@/components/form/ProductForm";
-import { useDataStore } from '@/store/dataStore'
+import { useDataStore } from "@/store/dataStore";
+import { useInputStore } from "@/store/inputStore";
 import Animation from "@/components/Animation";
 import { useState, useEffect } from "react";
 import axios from "axios";
 
 const AddProduct = () => {
-  const [productInfo, setProductInfo] = useState([])
-  const [isLoading, setIsLoading] = useState(false)
-  const { id } = useDataStore()
+  const [isLoading, setIsLoading] = useState(false);
+  const { id } = useDataStore();
+  const { setProductInfo } = useInputStore();
 
   useEffect(() => {
     const getProduct = async () => {
-      if (!id) return
+      if (!id) return;
       try {
-        setIsLoading(true)
-        const response = await axios.get(`/api/product/${id}`)
-        setProductInfo(response.data.data)
-        setIsLoading(false)
+        setIsLoading(true);
+        const response = await axios.get(`/api/product/${id}`);
+        setProductInfo(response.data.data);
+        setIsLoading(false);
       } catch (error) {
         console.log(error.message);
       }
-    }
-    getProduct()
-  }, [id])
-  
+    };
+    getProduct();
+  }, []);
+
   return (
     <>
       {isLoading ? (
@@ -34,9 +35,7 @@ const AddProduct = () => {
       ) : (
         <Animation>
           <h1 className="form-title">Edit product</h1>
-          {productInfo &&  (
-            <ProductForm {...productInfo} />
-          )}
+          <ProductForm />
         </Animation>
       )}
     </>
