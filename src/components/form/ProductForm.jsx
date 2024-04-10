@@ -12,9 +12,21 @@ import { useInputStore } from "@/store/inputStore";
 const ProductForm = () => {
   const router = useRouter();
   const { productInfo } = useInputStore();
+  const [categories, setCategories] = useState([]);
+
+  // console.log(productInfo);
+  useEffect(() => {
+    const getCategories = async () => {
+      const response = await axios.get("/api/categories");
+      setCategories(response.data);
+    };
+    getCategories();
+  }, []);
+
   const {
     id,
     product: existingProduct,
+    categoryId: existingCategory,
     imagesPath: existingImages,
     description: existingDescription,
     price: existingPrice,
@@ -22,6 +34,7 @@ const ProductForm = () => {
 
   const initialState = {
     product: existingProduct || "",
+    category: existingCategory || "",
     imagesPath: existingImages || [],
     description: existingDescription || "",
     price: existingPrice || 0,
@@ -96,27 +109,46 @@ const ProductForm = () => {
             />
             {label == "product" ? (
               <div className="flex flex-col">
-                <label className="form-label">Images</label>
-                <div className="flex gap-2">
-                  {!!productData.imagesPath?.length &&
-                    productData.imagesPath.map((image, index) => (
-                      <img
-                        src={image}
-                        alt={`Preview-${index}`}
-                        className="h-24 w-auto rounded-lg"
-                      />
+                <label className="form-label">Category</label>
+                <select
+                  value={productData.category}
+                  onChange={(e) =>
+                    setProductData((prev) => ({
+                      ...prev,
+                      category: e.target.value,
+                    }))
+                  }
+                  className="input-fields"
+                >
+                  <option value="">Uncategorized</option>
+                  {categories.length > 0 &&
+                    categories.map((c) => (
+                      <option value={c.id}>{c.name}</option>
                     ))}
-                  <label className="w-24 h-24 flex flex-col justify-center items-center bg-gray-300 rounded-lg cursor-pointer hover:scale-105 transition-all duration-200 ease-out">
-                    <ArrowUpOnSquareIcon className="stroke-teal-700 w-12 h-12" />
-                    <p className="text-teal-700">Upload</p>
-                    <input
-                      type="file"
-                      accept="image/png, image/jpg, image/jpeg"
-                      multiple
-                      onChange={handleImage}
-                      className="hidden"
-                    />
-                  </label>
+                </select>
+                <div className="flex flex-col flex-wrap">
+                  <label className="form-label">Images</label>
+                  <div className="flex gap-2">
+                    {!!productData.imagesPath?.length &&
+                      productData.imagesPath.map((image, index) => (
+                        <img
+                          src={image}
+                          alt={`Preview-${index}`}
+                          className="h-24 w-auto rounded-lg"
+                        />
+                      ))}
+                    <label className="w-24 h-24 flex flex-col justify-center items-center bg-gray-300 rounded-lg cursor-pointer hover:scale-105 transition-all duration-200 ease-out">
+                      <ArrowUpOnSquareIcon className="stroke-teal-700 w-12 h-12" />
+                      <p className="text-teal-700">Upload</p>
+                      <input
+                        type="file"
+                        accept="image/png, image/jpg, image/jpeg"
+                        multiple
+                        onChange={handleImage}
+                        className="hidden"
+                      />
+                    </label>
+                  </div>
                 </div>
               </div>
             ) : null}
