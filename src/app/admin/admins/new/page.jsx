@@ -1,17 +1,10 @@
 import Animation from "@/components/Animation";
 import FormLayout from "@/components/form/FormLayout";
-import { addAdminFields } from "@/constants";
 
 const AddAdmin = () => {
   return (
     <Animation>
-      <FormLayout
-        formProps={{
-          id: "admins",
-          pTitle: "New Admin",
-          pMapper: addAdminFields,
-        }}
-      />
+      <FormLayout id="admins" />
     </Animation>
   );
 };
