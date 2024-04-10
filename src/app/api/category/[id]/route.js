@@ -20,3 +20,18 @@ export async function GET(_, { params }) {
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 }
+
+export async function DELETE(_, { params }) {
+  const { id } = params;
+
+  try {
+    await db.category.delete({
+      where: {
+        id: parseInt(id),
+      },
+    });
+    return NextResponse.json("Category deleted");
+  } catch (error) {
+    return NextResponse.json({ error: error.message }, { status: 500 });
+  }
+}
