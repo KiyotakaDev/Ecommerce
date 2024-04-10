@@ -3,7 +3,7 @@ import db from '@/utils/prisma'
 
 export async function POST(request) {
   try {
-    const { product, imagesPath, description, price } = await request.json()
+    const { product, imagesPath, description, price, category } = await request.json()
     
     await db.product.create({
       data: {
@@ -11,7 +11,7 @@ export async function POST(request) {
         imagesPath,
         description,
         price: parseInt(price),
-        // categoryId: parseInt(category),
+        categoryId: parseInt(category),
       },
     });
     return NextResponse.json("Product created!")
