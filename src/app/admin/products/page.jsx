@@ -14,7 +14,7 @@ const Products = () => {
     const getProducts = async () => {
       try {
         setLoading(true);
-        const response = await axios.get("/api/products");
+        const response = await axios.get("/api/admin/products");
         const products = response.data;
         const dataToStore = {
           link: "products/new",

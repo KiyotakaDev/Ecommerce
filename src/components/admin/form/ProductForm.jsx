@@ -16,7 +16,7 @@ const ProductForm = () => {
 
   useEffect(() => {
     const getCategories = async () => {
-      const response = await axios.get("/api/categories");
+      const response = await axios.get("/api/admin/categories");
       setCategories(response.data);
     };
     getCategories();
@@ -50,13 +50,13 @@ const ProductForm = () => {
     try {
       if (id) {
         // Edit
-        const response = await axios.put(`/api/product/${id}`, productData);
+        const response = await axios.put(`/api/admin/products/${id}`, productData);
         if (response.status === 200) {
           router.push("/admin/products");
         }
       } else {
         // Create
-        const response = await axios.post("/api/product/new", productData);
+        const response = await axios.post("/api/admin/products/new", productData);
         if (response.status === 200) {
           router.push("/admin/products");
         }
@@ -82,7 +82,7 @@ const ProductForm = () => {
         for (const image of files) {
           imageData.append("images", image);
         }
-        const response = await axios.post("/api/upload", imageData);
+        const response = await axios.post("/api/admin/upload", imageData);
         const path = response.data.imagesPath;
         setProductData((prev) => ({
           ...prev,

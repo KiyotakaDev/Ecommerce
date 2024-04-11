@@ -18,7 +18,7 @@ const AddProduct = () => {
       if (!id) return;
       try {
         setIsLoading(true);
-        const response = await axios.get(`/api/product/${id}`);
+        const response = await axios.get(`/api/admin/products/${id}`);
         setProductInfo(response.data.data);
         setIsLoading(false);
       } catch (error) {

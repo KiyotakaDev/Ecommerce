@@ -26,12 +26,12 @@ const CategoriesPage = () => {
   const getCategories = async () => {
     try {
       setisLoading(true);
-      const response = await axios.get("/api/categories");
+      const response = await axios.get("/api/admin/categories");
       const categoriesWithParentNames = await Promise.all(
         response.data.map(async (category) => {
           if (category.parent) {
             const parentCategory = await axios.get(
-              `/api/category/${category.parent}`
+              `/api/admin/categories/${category.parent}`
             );
             return { ...category, parentName: parentCategory.data.name };
           }
@@ -53,7 +53,7 @@ const CategoriesPage = () => {
 
   const handleConfirm = async () => {
     try {
-      await axios.delete(`/api/category/${objToDelete}`);
+      await axios.delete(`/api/admin/categories/${objToDelete}`);
       const filter = categories.filter(
         (category) => category.id !== objToDelete
       );
@@ -78,10 +78,10 @@ const CategoriesPage = () => {
       };
       if (editing) {
         data.id = editing.id;
-        await axios.put(`/api/categories`, data);
+        await axios.put(`/api/admin/categories`, data);
         toast.success("Editing success!");
       } else {
-        await axios.post("/api/category/new", data);
+        await axios.post("/api/admin/categories/new", data);
         toast.success("Category added!");
       }
       setEditing(null);

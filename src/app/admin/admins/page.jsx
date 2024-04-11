@@ -14,7 +14,7 @@ const AdminsPage = () => {
     const getAdmins = async () => {
       try {
         setLoading(true);
-        const response = await axios.get("/api/admins");
+        const response = await axios.get("/api/admin/admins");
         const admins = response.data;
         const dataToStore = {
           link: "admins/new",
