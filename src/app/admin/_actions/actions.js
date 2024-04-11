@@ -6,6 +6,7 @@ import { zodProduct } from "@/utils/schemas";
 
 export async function addProduct(formData, editing, productID) {
   try {
+    const category = formData.get('category')
     const newData = {
       product: formData.get("product"),
       images: formData.getAll("images"),
@@ -41,6 +42,7 @@ export async function addProduct(formData, editing, productID) {
           imagesPath,
           description: data.description,
           price: data.price,
+          categoryId: parseInt(category),
         },
       });
     } else {

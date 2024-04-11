@@ -1,7 +1,8 @@
 import { useInputStore } from "@/store/inputStore";
 import { toast } from "react-toastify";
 import { ArrowUpOnSquareIcon } from "@heroicons/react/24/outline";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 const InputFields = (props) => {
   const { html: CustomTag, label, title, type, placeholder, editing } = props;
@@ -40,15 +41,26 @@ const InputFields = (props) => {
       return;
     }
     if (productFormData) {
-      setImages([...productFormData.imagesPath, ...files])
+      setImages([...productFormData.imagesPath, ...files]);
     } else {
-      setImages(files)
+      setImages(files);
     }
   };
   useEffect(() => {
-    if (editing) setImages(productFormData.imagesPath)
-  }, [])
-  
+    if (editing) setImages(productFormData.imagesPath);
+  }, []);
+
+  const [categories, setCategories] = useState([]);
+  const [cat, setCat] = useState("");
+
+  useEffect(() => {
+    const getCategories = async () => {
+      const response = await axios.get("/api/categories");
+      setCategories(response.data);
+    };
+    getCategories();
+  }, []);
+
   const handleFormInputs = (e) => {
     const { value } = e.target;
     setProductFormData({ [label]: value });
@@ -107,6 +119,30 @@ const InputFields = (props) => {
         onChange={(e) => handleFormInputs(e)}
         className="input-fields"
       />
+      {label === "product" ? (
+        <>
+          <label
+            htmlFor="category"
+            className="text-teal-900 font-semibold text-lg"
+          >
+            Category
+          </label>
+          <select
+            name="category"
+            value={cat}
+            onChange={(e) => setCat(e.target.value)}
+            className="input-fields w-full"
+          >
+            <option value="" className="input-fields">
+              Uncategorized
+            </option>
+            {categories.length > 0 &&
+              categories.map((cat, i) => (
+                <option value={cat.id}>{cat.name}</option>
+              ))}
+          </select>
+        </>
+      ) : null}
       {type === "number" && (
         <span className="-mt-2 font-semibold text-teal-700/60">
           ${productFormData.price / 100}

@@ -1,4 +1,4 @@
-import Nav from "@/components/Nav";
+import ToggleNav from "@/components/ToggleNav";
 
 export const metadata = {
   title: "Ecommerce-Admin",
@@ -9,9 +9,9 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body>
-        <div className="bg-slate-400 h-screen flex overflow-hidden">
-          <Nav />
-          <div className="bg-slate-200 flex-grow my-4 mr-4 rounded-lg p-10">
+        <div className="bg-violet-50 h-screen flex overflow-hidden">
+          <ToggleNav />
+          <div className="bg-white flex-grow my-4 mr-4 rounded-lg p-10">
             {children}
           </div>
         </div>

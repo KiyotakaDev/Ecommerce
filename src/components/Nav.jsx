@@ -10,7 +10,7 @@ const Nav = () => {
   const path = usePathname();
 
   return (
-    <aside className="py-4 pl-4">
+    <aside className="py-4 pl-4 text-gray-600 font-semibold">
       <div className="p-4 font-bold text-xl tracking-wider w-40 gap-2 cursor-default">
         <p>root</p>
       </div>
@@ -20,10 +20,10 @@ const Nav = () => {
           <Link
             href={"/admin"}
             className={`navi ${
-              path === "/admin" ? "bg-slate-200" : ""
+              path === "/admin" ? "bg-violet-200 text-primary" : ""
             }`}
           >
-            <HomeIcon className="w-6 h-6" />
+            <HomeIcon className="icon" />
             Dashboard
           </Link>
           {navLinks.map((link) => (
@@ -31,17 +31,17 @@ const Nav = () => {
               key={link.name}
               href={link.to}
               className={` navi ${
-                path.includes(link.to) ? "bg-slate-200" : ""
+                path.includes(link.to) ? "bg-violet-200 text-primary" : ""
               }`}
             >
-              <link.icon className="h-6 w-6" />
+              <link.icon className={`icon ${path.includes(link.to) ? "stroke-indigo-800" : ""}`} />
               <span>{link.name}</span>
             </Link>
           ))}
         </div>
         <div>
           <button className="navi w-full">
-            <ArrowLeftStartOnRectangleIcon className="h-6 w-6" />
+            <ArrowLeftStartOnRectangleIcon className="icon" />
             Logout
           </button>
         </div>

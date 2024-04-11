@@ -16,7 +16,10 @@
 
 @layer components {
   .navi {
-    @apply flex gap-2 p-3 rounded-l-lg transition-colors duration-200 ease-in-out hover:bg-slate-300;
+    @apply flex gap-2 p-3 rounded-l-lg transition-colors duration-200 ease-in-out hover:bg-violet-100;
+  }
+  .icon {
+    @apply h-6 w-6 
   }
   .app-btn {
     @apply bg-emerald-500 hover:bg-emerald-600 text-xl text-white rounded-md py-1 px-2 transition-colors duration-200 ease-in;
