@@ -37,3 +37,15 @@
     @apply text-teal-900 font-semibold text-lg;
   }
 }
+
+@layer utilities {
+  /* Client styles */
+  .wrapper {
+    @apply w-4/5 mx-auto;
+  }
+}
+
+.featured-grid {
+  display: grid;
+  grid-template-columns: 0.8fr 1.2fr;
+}
