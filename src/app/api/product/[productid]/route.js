@@ -32,7 +32,7 @@ export async function GET(_, { params }) {
 export async function PUT(request, { params }) {
   try {
     const { productid } = params
-    const { product, imagesPath, description, price, category } = await request.json()
+    const { product, imagesPath, description, price, category, properties } = await request.json()
     await db.product.update({
       where: {
         id: parseInt(productid)
@@ -42,7 +42,8 @@ export async function PUT(request, { params }) {
         imagesPath,
         description,
         price: parseInt(price),
-        categoryId: parseInt(category)
+        categoryId: parseInt(category),
+        properties
       }
     })
     return NextResponse.json("Product updated!")
