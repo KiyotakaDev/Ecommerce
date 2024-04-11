@@ -1,8 +1,12 @@
-import React from 'react'
+import Featured from '@/components/client/Featured'
+import Header from '@/components/client/Header'
 
 const HomePage = () => {
   return (
-    <div>HomePage</div>
+    <div>
+      <Header />
+      <Featured />
+    </div>
   )
 }
 
