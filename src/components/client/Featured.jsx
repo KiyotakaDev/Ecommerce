@@ -44,10 +44,10 @@ const Featured = () => {
               <p className="text-zinc-300 text-xl">{featured.description}</p>
               </div>
               <div className="flex gap-12 text-lg text-white">
-                <button className="bg-transparent rounded-lg border-2 px-4 py-2">
+                <button className="client-s-btn">
                   Read more
                 </button>
-                <button className="flex gap-2 justify-center items-center bg-violet-800 rounded-lg px-4 py-2">
+                <button className="client-p-btn">
                   <ShoppingCartIcon className="w-8 h-8" />
                   Add to cart
                 </button>
