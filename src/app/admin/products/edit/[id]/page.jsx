@@ -1,10 +1,10 @@
 "use client";
 
-import MainLoader from "@/components/loaders/MainLoader";
-import ProductForm from "@/components/form/ProductForm";
+import MainLoader from "@/components/admin/loaders/MainLoader";
+import ProductForm from "@/components/admin/form/ProductForm";
 import { useDataStore } from "@/store/dataStore";
 import { useInputStore } from "@/store/inputStore";
-import Animation from "@/components/Animation";
+import Animation from "@/components/admin/Animation";
 import { useState, useEffect } from "react";
 import axios from "axios";
 

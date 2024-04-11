@@ -1,8 +1,8 @@
 "use client";
 
-import Animation from "@/components/Animation";
-import MainLoader from "@/components/loaders/MainLoader";
-import Modal from "@/components/sub/Modal";
+import Animation from "@/components/admin/Animation";
+import MainLoader from "@/components/admin/loaders/MainLoader";
+import Modal from "@/components/admin/sub/Modal";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { ToastContainer, toast } from "react-toastify";

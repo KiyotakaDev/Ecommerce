@@ -1,5 +1,5 @@
-import Animation from "@/components/Animation";
-import FormLayout from "@/components/form/FormLayout";
+import Animation from "@/components/admin/Animation";
+import FormLayout from "@/components/admin/form/FormLayout";
 
 const AddProduct = () => {
   return (

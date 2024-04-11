@@ -1,6 +1,6 @@
 'use client'
 
-import Animation from '@/components/Animation'
+import Animation from '@/components/admin/Animation'
 import React from 'react'
 import { useDataStore } from '@/store/dataStore'
 
