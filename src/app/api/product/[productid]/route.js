@@ -1,14 +1,17 @@
 import { NextResponse } from "next/server";
 import db from '@/utils/prisma'
+import fs from 'fs/promises'
 
 export async function DELETE(_, { params }) {
   try {
     const { productid } = params;
-    await db.product.delete({
+    const product = await db.product.delete({
       where: {
         id: parseInt(productid)
       }
     })
+    await fs.unlink(`public${product.imagesPath}`)
+
     return NextResponse.json("Product deleted!")
   } catch (error) {
     return NextResponse.json({ error: error.message }, { status: 500 })
