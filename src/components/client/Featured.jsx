@@ -34,12 +34,15 @@ const Featured = () => {
         <FeatureLoader />
       ) : (
         <Animation>
-          <div className="wrapper featured-grid h-[60vh] py-14">
+          <div className="wrapper featured-grid h-[60vh] max-h-[60vh] py-14">
             <div className="flex flex-col justify-center items-start gap-6">
-              <h1 className="text-white text-6xl font-bold tracking-wider">
+              <h1 className="text-white text-5xl font-bold tracking-wider">
                 {featured.product}
               </h1>
+              <div className="h-56 overflow-y-scroll">
+
               <p className="text-zinc-300 text-xl">{featured.description}</p>
+              </div>
               <div className="flex gap-12 text-lg text-white">
                 <button className="bg-transparent rounded-lg border-2 px-4 py-2">
                   Read more
