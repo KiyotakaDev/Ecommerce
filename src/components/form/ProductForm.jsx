@@ -14,7 +14,6 @@ const ProductForm = () => {
   const { productInfo } = useInputStore();
   const [categories, setCategories] = useState([]);
 
-  // console.log(productInfo);
   useEffect(() => {
     const getCategories = async () => {
       const response = await axios.get("/api/categories");
@@ -27,6 +26,7 @@ const ProductForm = () => {
     id,
     product: existingProduct,
     categoryId: existingCategory,
+    properties: existingProperties,
     imagesPath: existingImages,
     description: existingDescription,
     price: existingPrice,
@@ -35,6 +35,7 @@ const ProductForm = () => {
   const initialState = {
     product: existingProduct || "",
     category: existingCategory || "",
+    properties: existingProperties || {},
     imagesPath: existingImages || [],
     description: existingDescription || "",
     price: existingPrice || 0,
@@ -93,6 +94,30 @@ const ProductForm = () => {
     }
   };
 
+  // Handle properties
+  const changeProductProp = (name, value) => {
+    setProductData(prev => ({
+      ...prev,
+      properties: {
+        ...prev.properties,
+        [name]: value
+      }
+    }))    
+  };
+
+  let propertiesToFill = [];
+  if (categories.length > 0 && productData.category) {
+    const selectedID = productData.category;
+    let catInfo = categories.find(({ id }) => id == selectedID);
+    propertiesToFill.push(...catInfo.properties);
+
+    while (catInfo?.parent) {
+      const parentCat = categories.find(({ id }) => id == catInfo?.parent);
+      propertiesToFill.push(...parentCat.properties);
+      catInfo = parentCat;
+    }
+  }
+
   return (
     <form onSubmit={saveProduct} className="flex flex-col">
       {addProductFields.map((fields, index) => {
@@ -126,6 +151,28 @@ const ProductForm = () => {
                       <option value={c.id}>{c.name}</option>
                     ))}
                 </select>
+
+                {propertiesToFill.length > 0 &&
+                  propertiesToFill.map((p, i) => (
+                    <div key={i} className="flex gap-2">
+                      <div>{p.name}</div>
+                      <select
+                        value={productData.properties[p.name]}
+                        onChange={(e) =>
+                          changeProductProp(p.name, e.target.value)
+                        }
+                        className="input-fields"
+                      >
+                        <option value="">(select)</option>
+                        {p.values.map((v, i) => (
+                          <option key={i} value={v}>
+                            {v}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                  ))}
+
                 <div className="flex flex-col flex-wrap">
                   <label className="form-label">Images</label>
                   <div className="flex gap-2">
