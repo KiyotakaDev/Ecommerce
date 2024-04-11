@@ -1,11 +1,11 @@
 "use client";
 
-import Animation from "@/components/admin/Animation";
+import Animation from "@/components/Animation";
 import DataLayout from "@/components/admin/data-samplers/DataLayout";
 import axios from "axios";
 import { useEffect } from "react";
 import { useDataStore } from "@/store/dataStore";
-import MainLoader from "@/components/admin/loaders/MainLoader";
+import MainLoader from "@/components/loaders/MainLoader";
 
 const AdminsPage = () => {
   const { setData, setMapper, isLoading, setLoading } = useDataStore();
