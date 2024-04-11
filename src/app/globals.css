@@ -15,6 +15,7 @@
 }
 
 @layer components {
+  /* Server */
   .navi {
     @apply flex gap-2 p-3 rounded-l-lg transition-colors duration-200 ease-in-out hover:bg-violet-100;
   }
@@ -36,6 +37,14 @@
   .form-label {
     @apply text-teal-900 font-semibold text-lg;
   }
+
+  /* Client */
+  .client-p-btn {
+    @apply flex gap-2 justify-center items-center bg-violet-800 hover:bg-violet-600 rounded-lg px-4 py-2 transition-colors duration-200 ease-in-out;
+  }
+  .client-s-btn {
+    @apply bg-transparent hover:bg-white/20 transition-colors duration-200 ease-in-out rounded-lg border-2 px-4 py-2;
+  }
 }
 
 @layer utilities {
@@ -48,4 +57,8 @@
 .featured-grid {
   display: grid;
   grid-template-columns: 0.8fr 1.2fr;
+}
+.latest-prods {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
 }
