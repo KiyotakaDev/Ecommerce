@@ -3,13 +3,13 @@
 import { adminLogin } from "@/constants";
 import { useState } from "react";
 import { signIn } from "next-auth/react";
-import { useRouter } from 'next/navigation'
+import { useRouter } from "next/navigation";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import '../auth.css'
+import "../auth.css";
 
 const AdminLogin = () => {
-  const router = useRouter()
+  const router = useRouter();
 
   const initialState = {
     username: "",
@@ -23,14 +23,14 @@ const AdminLogin = () => {
       const response = await signIn("credentials", {
         username: logData.username,
         password: logData.password,
-        redirect: false
-      }); 
+        redirect: false,
+      });
       if (response.error) {
         toast.error(response.error);
-        return
+        return;
       }
       if (response.ok) {
-        router.push('/admin')
+        router.push("/admin");
       }
     } catch (error) {
       console.log(error.message);
