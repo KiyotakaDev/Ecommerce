@@ -2,14 +2,14 @@
 
 import Animation from '@/components/Animation'
 import React from 'react'
-import { useDataStore } from '@/store/dataStore'
+import { useAdminStore } from '@/store/adminStore'
 
 const AdminPage = () => {
-  const { link } = useDataStore()
+  const { adminData } = useAdminStore()
 
   return (
     <Animation>
-      {link}
+      Welcome {adminData.name} your email is {adminData.email}
     </Animation>
   )
 }

@@ -12,11 +12,11 @@ import { useAdminStore } from "@/store/adminStore";
 
 const ToggleNav = (props) => {
   const path = usePathname();
-  const { setAdminData } = useAdminStore();
+  const { setAdminData, adminData } = useAdminStore();
   const [toggle, setToggle] = useState(false);
   useEffect(() => {
     setAdminData(props.user);
-  }, []);
+  }, [Object.keys(adminData).length === 0]);
 
   return (
     <>
