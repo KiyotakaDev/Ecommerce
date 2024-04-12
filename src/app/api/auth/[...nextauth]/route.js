@@ -9,20 +9,18 @@ const authOptions = {
       name: "Credentials",
       credentials: {
         username: { label: "Username", type: "text", placeholder: "jsmith" },
-        password: { lable: "Password", type: "password", placeholder: "****" },
+        password: { label: "Password", type: "password", placeholder: "****" },
       },
       async authorize(credentials, request) {
-        console.log(credentials);
-
         const adminFound = await db.admin.findUnique({
           where: {
             username: credentials.username
           }
         })
-        if (!adminFound) return null
+        if (!adminFound) throw new Error("Invalid credentials")
 
         const matched = await bcrypt.compare(credentials.password, adminFound.password)
-        if (!matched) return null
+        if (!matched) throw new Error("Invalid credentials")
 
         return {
           id: adminFound.id,
@@ -30,7 +28,10 @@ const authOptions = {
         }
       } 
     })
-  ]
+  ],
+  pages: {
+    signIn: "/auth/admin"
+  }
 }
 
 const handler = NextAuth(authOptions)
