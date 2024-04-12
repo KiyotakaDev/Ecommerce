@@ -1,9 +1,10 @@
 import { Roboto } from "next/font/google";
 import "./globals.css";
+import CustomApp from "@/components/client/CustomApp";
 
 const roboto = Roboto({
-  weight: '500', 
-  subsets: ["latin"] 
+  weight: "500",
+  subsets: ["latin"],
 });
 
 export const metadata = {
@@ -14,7 +15,9 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={roboto.className}>{children}</body>
+      <body className={roboto.className}>
+        <CustomApp>{children}</CustomApp>
+      </body>
     </html>
   );
 }
