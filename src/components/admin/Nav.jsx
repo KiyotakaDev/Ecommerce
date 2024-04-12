@@ -1,61 +1,14 @@
-"use client";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { getServerSession } from "next-auth/next";
+import ToggleNav from "./ToggleNav";
 
-import { navLinks } from "@/constants";
-import { HomeIcon } from "@heroicons/react/24/outline";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { ArrowLeftStartOnRectangleIcon } from "@heroicons/react/24/outline";
-import { signOut } from "next-auth/react";
-
-const Nav = () => {
-  const path = usePathname();
+const Nav = async () => {
+  const session = await getServerSession(authOptions);
 
   return (
-    <aside className="py-4 pl-4 text-gray-600 font-semibold">
-      <div className="p-4 font-bold text-xl tracking-wider w-40 gap-2 cursor-default">
-        <p>root</p>
-      </div>
-
-      <nav className="flex flex-col gap-2">
-        <div>
-          {navLinks.map((link) => (
-            <>
-              <Link
-                key={link.name}
-                href={link.to}
-                className={` navi ${
-                  path.includes(link.to) ? "bg-violet-200 text-primary" : ""
-                }`}
-              >
-                <link.icon
-                  className={`icon ${
-                    path.includes(link.to) ? "stroke-indigo-800" : ""
-                  }`}
-                />
-                <span>{link.name}</span>
-              </Link>
-              {link.name === "Ecommerce" ? (
-                <Link
-                  href={"/admin"}
-                  className={`navi ${
-                    path === "/admin" ? "bg-violet-200 text-primary" : ""
-                  }`}
-                >
-                  <HomeIcon className="icon" />
-                  Dashboard
-                </Link>
-              ) : null}
-            </>
-          ))}
-        </div>
-        <div>
-          <button onClick={signOut} className="navi w-full">
-            <ArrowLeftStartOnRectangleIcon className="icon" />
-            Logout
-          </button>
-        </div>
-      </nav>
-    </aside>
+    <>
+      <ToggleNav {...session} />
+    </>
   );
 };
 
