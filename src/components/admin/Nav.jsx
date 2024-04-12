@@ -5,6 +5,7 @@ import { HomeIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { ArrowLeftStartOnRectangleIcon } from '@heroicons/react/24/outline'
+import { signOut } from 'next-auth/react'
 
 const Nav = () => {
   const path = usePathname();
@@ -40,7 +41,7 @@ const Nav = () => {
           ))}
         </div>
         <div>
-          <button className="navi w-full">
+          <button onClick={signOut} className="navi w-full">
             <ArrowLeftStartOnRectangleIcon className="icon" />
             Logout
           </button>
