@@ -12,14 +12,14 @@ export const CartProvider = ({ children }) => {
   const [cartProducts, setCartProducts] = useState([]);
 
   const addProductToCart = (product) => {
-    setCartProducts(prev => [...prev, product])
-  }
+    setCartProducts((prev) => [...prev, product]);
+  };
 
   return (
     <CartContext.Provider
       value={{
         cartProducts,
-        addProductToCart
+        addProductToCart,
       }}
     >
       {children}

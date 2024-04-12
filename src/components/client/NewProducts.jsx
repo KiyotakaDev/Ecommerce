@@ -27,7 +27,9 @@ const NewProducts = () => {
     <>
       {!isLoading ? (
         <div className="wrapper pb-16">
-          <h3 className="py-6 text-3xl font-semibold text-violet-950">New arrivals</h3>
+          <h3 className="py-6 text-3xl font-semibold text-violet-950">
+            New arrivals
+          </h3>
           <div className="latest-prods gap-10">
             {latest.length > 0 &&
               latest.map((prod, index) => (

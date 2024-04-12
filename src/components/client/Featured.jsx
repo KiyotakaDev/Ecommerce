@@ -8,7 +8,7 @@ import FeatureLoader from "../loaders/FeatureLoader";
 import { useCartContext } from "./CartProvider";
 
 const Featured = () => {
-  const { addProductToCart } = useCartContext()
+  const { addProductToCart } = useCartContext();
 
   const [featured, setFeatured] = useState({});
   const [isLoading, setIsLoading] = useState(false);
@@ -43,14 +43,14 @@ const Featured = () => {
                 {featured.product}
               </h1>
               <div className="h-56 overflow-y-scroll">
-
-              <p className="text-zinc-300 text-xl">{featured.description}</p>
+                <p className="text-zinc-300 text-xl">{featured.description}</p>
               </div>
               <div className="flex gap-12 text-lg text-white">
-                <button className="client-s-btn">
-                  Read more
-                </button>
-                <button onClick={() => addProductToCart(featured.id)} className="client-p-btn">
+                <button className="client-s-btn">Read more</button>
+                <button
+                  onClick={() => addProductToCart(featured.id)}
+                  className="client-p-btn"
+                >
                   <ShoppingCartIcon className="w-8 h-8" />
                   Add to cart
                 </button>
