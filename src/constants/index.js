@@ -1,10 +1,12 @@
 import {
+  ShoppingBagIcon,
   ArchiveBoxIcon,
   UserGroupIcon,
   ListBulletIcon,
 } from "@heroicons/react/24/outline";
 
 const navLinks = [
+  { name: "Ecommerce", to: "/ecommerce", icon: ShoppingBagIcon },
   { name: "Products", to: "/admin/products", icon: ArchiveBoxIcon },
   { name: "Categories", to: "/admin/categories", icon: ListBulletIcon },
   { name: "Admins", to: "/admin/admins", icon: UserGroupIcon },
