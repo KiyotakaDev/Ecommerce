@@ -9,7 +9,7 @@ const ToggleNav = () => {
 
   return (
     <>
-      <div className="z-10 absolute right-0">
+      <div className="z-10 absolute right-0 lg:hidden">
         <button onClick={() => setToggle(!toggle)}>
           <Bars3CenterLeftIcon className="w-12 h-12" />
         </button>
