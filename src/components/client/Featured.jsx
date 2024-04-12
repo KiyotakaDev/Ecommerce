@@ -5,8 +5,11 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import Animation from "../Animation";
 import FeatureLoader from "../loaders/FeatureLoader";
+import { useCartContext } from "./CartProvider";
 
 const Featured = () => {
+  const { addProductToCart } = useCartContext()
+
   const [featured, setFeatured] = useState({});
   const [isLoading, setIsLoading] = useState(false);
 
@@ -47,7 +50,7 @@ const Featured = () => {
                 <button className="client-s-btn">
                   Read more
                 </button>
-                <button className="client-p-btn">
+                <button onClick={() => addProductToCart(featured.id)} className="client-p-btn">
                   <ShoppingCartIcon className="w-8 h-8" />
                   Add to cart
                 </button>

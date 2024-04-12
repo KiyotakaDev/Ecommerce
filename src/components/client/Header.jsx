@@ -1,6 +1,11 @@
+'use client'
+
 import Link from 'next/link'
+import { useCartContext } from './CartProvider'
 
 const Header = () => {
+  const { cartProducts } = useCartContext()
+
   return (
     <header className='bg-zinc-900 text-2xl'>
       <div className='wrapper flex justify-between py-6'>
@@ -10,7 +15,7 @@ const Header = () => {
           <Link href={'/products'}>All products</Link>
           <Link href={'/categories'}>Categories</Link>
           <Link href={'/account'}>Account</Link>
-          <Link href={'/cart'}>Cart (0)</Link>
+          <Link href={'/cart'}>Cart ({cartProducts.length})</Link>
         </nav>
       </div>
     </header>
