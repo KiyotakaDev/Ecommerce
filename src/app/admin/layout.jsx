@@ -1,4 +1,5 @@
 import ToggleNav from "@/components/admin/ToggleNav";
+import "./admin.css";
 
 export const metadata = {
   title: "Ecommerce-Admin",
