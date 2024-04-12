@@ -1,0 +1,46 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* @layer base {
+  table {
+    @apply w-full mt-5;
+  }
+  table thead {
+    @apply bg-slate-400;
+  }
+  table tr td {
+    @apply border border-slate-400 px-2 py-1;
+  }
+} */
+
+@layer components {
+  .client-p-btn {
+    @apply flex gap-2 justify-center items-center bg-violet-800 hover:bg-violet-600 rounded-lg px-4 py-2 transition-colors duration-200 ease-in-out;
+  }
+  .client-s-btn {
+    @apply bg-transparent hover:bg-white/20 transition-colors duration-200 ease-in-out rounded-lg border-2 px-4 py-2;
+  }
+  .cart-prod {
+    @apply bg-white rounded-lg h-auto w-full;
+  }
+}
+
+@layer utilities {
+  .wrapper {
+    @apply w-4/5 mx-auto;
+  }
+}
+
+.featured-grid {
+  display: grid;
+  grid-template-columns: 0.8fr 1.2fr;
+}
+.latest-prods {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+}
+.cart-grid {
+  display: grid;
+  grid-template-columns: 1.3fr 0.7fr;
+}
