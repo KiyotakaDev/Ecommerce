@@ -53,7 +53,7 @@ const DataLayout = () => {
 
   const handleDelete = async (id) => {
     try {
-      const response = await axios.delete(`/api/${type}/${id}`);
+      const response = await axios.delete(`/api/admin/${type}s/${id}`);
       const filter = mapper.filter((newData) => newData.id !== id);
       setMapper(filter);
       toast.success(response.data);
