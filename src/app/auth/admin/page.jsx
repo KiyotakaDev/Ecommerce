@@ -6,7 +6,6 @@ import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import "../auth.css";
 
 const AdminLogin = () => {
   const router = useRouter();
