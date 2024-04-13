@@ -145,10 +145,10 @@ const CategoriesPage = () => {
         <MainLoader />
       ) : (
         <Animation>
-          <h1 className="text-teal-900 font-bold my-2 mb-4 text-3xl">
+          <h1 className="page-title">
             Categories
           </h1>
-          <label className="text-teal-900 font-semibold text-lg">
+          <label className="form-label">
             {editing ? `Edit category ${editing.name}` : "New Category"}
           </label>
           <form onSubmit={saveCategory}>
@@ -158,7 +158,7 @@ const CategoriesPage = () => {
                 value={name}
                 placeholder={"Category name"}
                 onChange={(e) => setName(e.target.value)}
-                className="mb-0 input-fields"
+                className="input-fields mb-0"
               />
               <select
                 value={parent}
@@ -175,13 +175,13 @@ const CategoriesPage = () => {
               </select>
             </div>
             <div className="mb-2">
-              <label className="block text-teal-900 font-semibold text-lg">
+              <label className="block form-label pt-3 pb-1">
                 Properties
               </label>
               <button
                 type="button"
                 onClick={addProperty}
-                className="app-btn text-base bg-blue-400 hover:bg-blue-600"
+                className="app-btn text-lg text-white bg-indigo-400 hover:bg-indigo-600"
               >
                 Add Property
               </button>
@@ -253,7 +253,7 @@ const CategoriesPage = () => {
                       <td className="flex justify-evenly w-full gap-4">
                         <button
                           onClick={() => editCategory(category)}
-                          className="action-btn bg-yellow-500 w-full"
+                          className="action-btn action-edit w-full"
                         >
                           Edit
                         </button>
@@ -263,7 +263,7 @@ const CategoriesPage = () => {
                             setObjName(category.name);
                             setObjToDelete(category.id);
                           }}
-                          className="action-btn bg-red-500 text-white w-full"
+                          className="action-btn action-delete w-full"
                         >
                           Delete
                         </button>
@@ -285,13 +285,13 @@ const CategoriesPage = () => {
             <div className="flex justify-evenly items-center">
               <button
                 onClick={handleCancel}
-                className="bg-gray-300 text-gray-800 px-4 py-2 rounded-md mt-8"
+                className="modal-btn modal-cancel mt-8"
               >
                 Cancel
               </button>
               <button
                 onClick={handleConfirm}
-                className="bg-red-500 text-white px-4 py-2 rounded-md mt-8"
+                className="modal-btn action-delete rounded-md mt-8"
               >
                 Yes
               </button>

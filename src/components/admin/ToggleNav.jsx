@@ -26,9 +26,9 @@ const ToggleNav = (props) => {
         </button>
       </div>
 
-      <aside className="py-4 pl-4 text-gray-600 font-semibold">
-        <div className="p-4 font-bold text-xl tracking-wider w-40 gap-2 cursor-default">
-          <p>{props.user.name}</p>
+      <aside className="py-4 pl-4 text-gray-600 font-semibold text-xl">
+        <div className="p-4 font-bold text-xl tracking-wider w-48 gap-2 cursor-default">
+          <p className="text-3xl text-violet-950">{props.user.name}</p>
         </div>
 
         <nav className="flex flex-col gap-2">

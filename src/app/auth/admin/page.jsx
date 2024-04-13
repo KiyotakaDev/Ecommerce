@@ -46,25 +46,32 @@ const AdminLogin = () => {
     <div className="h-screen flex justify-center items-center bg-violet-50">
       <form
         onSubmit={handleSubmit}
-        className="flex flex-col gap-5 bg-violet-300 shadow-lg shadow-violet-700 p-10 h-auto w-2/4"
+        className="flex flex-col justify-between bg-violet-300 shadow-lg shadow-violet-700 p-10 h-[50%] w-[35%] rounded-2xl"
       >
-        <h1 className="text-violet-900 font-bold text-4xl mb-4">Login</h1>
-        {adminLogin.map((field, index) => {
-          const { title, type, placeholder } = field;
-          const htfor = title.toLocaleLowerCase();
-          return (
-            <div key={index} className="flex flex-col">
-              <label htmlFor={htfor}>{title}</label>
-              <input
-                type={type}
-                name={htfor}
-                placeholder={placeholder}
-                onChange={(e) => handleOnChange(e.target.value, htfor)}
-              />
-            </div>
-          );
-        })}
-        <button className="w-full bg-violet-800 text-white">Login</button>
+        <div className="flex flex-col gap-5">
+          <h1 className="form-title">Login</h1>
+          {adminLogin.map((field, index) => {
+            const { title, type, placeholder } = field;
+            const htfor = title.toLocaleLowerCase();
+            return (
+              <div key={index} className="flex flex-col">
+                <label htmlFor={htfor} className="form-label">
+                  {title}
+                </label>
+                <input
+                  type={type}
+                  name={htfor}
+                  placeholder={placeholder}
+                  onChange={(e) => handleOnChange(e.target.value, htfor)}
+                  className="input-fields py-3 px-5 text-2xl"
+                />
+              </div>
+            );
+          })}
+        </div>
+        <button className="w-full form-btn py-3 rounded-lg font-bold">
+          Login
+        </button>
       </form>
       <ToastContainer />
     </div>

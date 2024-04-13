@@ -64,7 +64,7 @@ const DataLayout = () => {
 
   return (
     <>
-      <h1 className="text-teal-900 font-bold my-2 mb-4 text-3xl">{field}s</h1>
+      <h1 className="page-title">{field}s</h1>
       <Link href={link} className="app-btn">
         {`Add ${field.toLowerCase()}`}
       </Link>
@@ -87,18 +87,18 @@ const DataLayout = () => {
                     <td>{validation}</td>
                     <td>
                       {username !== "root" || product ? (
-                        <div className="flex justify-evenly">
+                        <div className="flex gap-x-5 justify-evenly">
                           <Link
                             onClick={() => setId(data.id)}
                             href={`${type}s/edit/${data.product}`}
-                            className="action-btn bg-yellow-500"
+                            className="action-btn action-edit w-full"
                           >
                             <PencilSquareIcon className="w-5 h-5" />
                             Edit
                           </Link>
                           <button
                             onClick={() => showActions(data.id, validation)}
-                            className="action-btn text-white bg-red-500"
+                            className="action-btn action-delete w-full"
                           >
                             <TrashIcon className="w-5 h-5" />
                             Delete

@@ -1,3 +1,18 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+  .input-fields {
+    @apply border-2 text-xl border-violet-300 outline-none rounded-md px-2 py-1 w-full mb-2 focus:border-violet-500 focus:shadow-sm focus:shadow-violet-500;
+  }
+  .form-title {
+    @apply text-violet-950 font-bold my-2 mb-4 text-5xl;
+  }
+  .form-label {
+    @apply text-violet-950 font-semibold text-2xl;
+  }
+  .form-btn {
+    @apply text-3xl text-white bg-violet-800 hover:bg-violet-600 transition-colors duration-200 ease-in-out;
+  } 
+}

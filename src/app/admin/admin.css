@@ -2,39 +2,54 @@
 @tailwind components;
 @tailwind utilities;
 
-/* @layer base {
+@layer base {
   table {
-    @apply w-full mt-5;
+    @apply w-full mt-6 text-xl;
   }
   table thead {
-    @apply bg-slate-400;
+    @apply bg-violet-200 text-lg font-bold;
   }
   table tr td {
-    @apply border border-slate-400 px-2 py-1;
+    @apply border border-violet-800 px-2 py-1;
   }
-} */
+}
 
 @layer components {
   /* Server */
+  .page-title {
+    @apply text-violet-950 font-bold my-2 mb-4 text-4xl;
+  }
   .navi {
     @apply flex gap-2 p-3 rounded-l-lg transition-colors duration-200 ease-in-out hover:bg-violet-100;
   }
   .icon {
-    @apply h-6 w-6 
+    @apply h-8 w-8 
   }
   .app-btn {
-    @apply bg-emerald-500 hover:bg-emerald-600 text-xl text-white rounded-md py-1 px-2 transition-colors duration-200 ease-in;
+    @apply bg-violet-500 hover:bg-violet-700 text-xl text-white rounded-md py-1 px-2 transition-colors duration-200 ease-in font-semibold;
   }
   .action-btn {
-    @apply px-2 py-1 rounded-lg text-base flex justify-center items-center;
+    @apply px-3 py-1 text-white rounded-xl text-lg font-semibold flex justify-center items-center transition-colors duration-200 ease-in-out;
+  }
+  .action-edit {
+    @apply bg-yellow-500 hover:bg-yellow-400;
+  }
+  .action-delete {
+    @apply bg-red-500 hover:bg-red-400;
+  }
+  .modal-btn {
+    @apply px-4 py-2 rounded-md mt-8 text-white font-semibold;
+  }
+  .modal-cancel {
+    @apply bg-violet-400 hover:bg-violet-600;
   }
   .input-fields {
-    @apply border-2 border-gray-300 rounded-md px-2 py-1 w-full mb-2 focus:border-emerald-500;
+    @apply border-2 text-lg border-violet-300 outline-none rounded-md px-2 py-1 w-full mb-2 focus:border-violet-500 focus:shadow-sm focus:shadow-violet-500;
   }
   .form-title {
-    @apply text-teal-900 font-bold my-2 mb-4 text-3xl;
+    @apply text-violet-950 font-bold my-2 mb-4 text-3xl;
   }
   .form-label {
-    @apply text-teal-900 font-semibold text-lg;
+    @apply text-violet-950 font-semibold text-xl;
   }
 }

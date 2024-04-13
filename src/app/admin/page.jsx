@@ -9,6 +9,7 @@ const AdminPage = () => {
 
   return (
     <Animation>
+      <h1 className='page-title'>Dashboard</h1>
       Welcome {adminData.name} your email is {adminData.email}
     </Animation>
   )
