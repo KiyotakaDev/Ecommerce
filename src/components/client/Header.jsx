@@ -15,7 +15,7 @@ const Header = () => {
           Ecommerce
         </Link>
         <nav className="text-zinc-300 flex gap-6">
-          {adminData && <Link href={"/admin"}>Admin</Link>}
+          {Object.keys(adminData).length > 0 && <Link href={"/admin"}>Admin</Link>}
           <Link href={"/ecommerce/products"}>All products</Link>
           <Link href={"/ecommerce/categories"}>Categories</Link>
           <Link href={"/ecommerce/account"}>Account</Link>
