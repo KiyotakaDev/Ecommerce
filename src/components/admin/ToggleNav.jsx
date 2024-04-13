@@ -12,7 +12,7 @@ import { useAdminStore } from "@/store/adminStore";
 
 const ToggleNav = (props) => {
   const path = usePathname();
-  const { setAdminData, adminData } = useAdminStore();
+  const { setAdminData, adminData, resetAdminData } = useAdminStore();
   const [toggle, setToggle] = useState(false);
   useEffect(() => {
     setAdminData(props.user);
@@ -64,7 +64,13 @@ const ToggleNav = (props) => {
             ))}
           </div>
           <div>
-            <button onClick={signOut} className="navi w-full">
+            <button
+              onClick={() => {
+                resetAdminData();
+                signOut();
+              }}
+              className="navi w-full"
+            >
               <ArrowLeftStartOnRectangleIcon className="icon" />
               Logout
             </button>
