@@ -70,9 +70,9 @@ const DataLayout = () => {
       </Link>
       {mapper.length !== 0 ? (
         <>
-          <table className="border border-slate-300">
+          <table>
             <thead>
-              <tr className="border border-slate-200">
+              <tr>
                 <td>{field}</td>
                 <td>Actions</td>
               </tr>
