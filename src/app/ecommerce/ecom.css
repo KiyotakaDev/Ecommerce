@@ -44,3 +44,7 @@
   display: grid;
   grid-template-columns: 1.3fr 0.7fr;
 }
+.allproducts-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+}
