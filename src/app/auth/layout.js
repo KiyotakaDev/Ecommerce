@@ -1,3 +1,5 @@
+import './auth.css'
+
 export const metadata = {
   title: 'Admin',
   description: 'Admin authentication',
