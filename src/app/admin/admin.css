@@ -4,13 +4,13 @@
 
 @layer base {
   table {
-    @apply w-full mt-6 text-xl;
+    @apply w-full mt-6 text-xl shadow-lg shadow-violet-200 rounded-xl;
   }
   table thead {
     @apply bg-violet-200 text-lg font-bold;
   }
   table tr td {
-    @apply border border-violet-800 px-2 py-1;
+    @apply py-2 px-4;
   }
 }
 
@@ -29,7 +29,7 @@
     @apply bg-violet-500 hover:bg-violet-700 text-xl text-white rounded-md py-1 px-2 transition-colors duration-200 ease-in font-semibold;
   }
   .action-btn {
-    @apply px-3 py-1 text-white rounded-xl text-lg font-semibold flex justify-center items-center transition-colors duration-200 ease-in-out;
+    @apply px-3 py-1 text-white rounded-xl text-lg font-semibold flex justify-center items-center transition-colors duration-200 ease-in-out shadow-lg shadow-black/40;
   }
   .action-edit {
     @apply bg-yellow-500 hover:bg-yellow-400;
