@@ -196,6 +196,7 @@ const ProductForm = () => {
                     {!!productData.imagesPath?.length &&
                       productData.imagesPath.map((image, index) => (
                         <img
+                          key={index}
                           src={image}
                           alt={`Preview-${index}`}
                           className="h-24 w-auto rounded-lg"
