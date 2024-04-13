@@ -2,17 +2,14 @@
 @tailwind components;
 @tailwind utilities;
 
-/* @layer base {
+@layer base {
   table {
-    @apply w-full mt-5;
+    @apply mt-10 w-full text-left uppercase text-gray-500 text-xl;
   }
-  table thead {
-    @apply bg-slate-400;
+  td {
+    @apply border-t-[1px] px-6 border-gray-500/40;
   }
-  table tr td {
-    @apply border border-slate-400 px-2 py-1;
-  }
-} */
+}
 
 @layer components {
   .client-p-btn {
@@ -23,6 +20,9 @@
   }
   .cart-prod {
     @apply bg-white rounded-lg h-auto w-full;
+  }
+  .quantity {
+    @apply bg-zinc-400 hover:bg-zinc-500 transition-colors duration-200 ease-in-out w-full flex justify-center items-center rounded-lg p-1 text-white text-2xl;
   }
 }
 
