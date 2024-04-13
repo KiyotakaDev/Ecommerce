@@ -5,5 +5,6 @@ export const useAdminStore = create((set) => ({
   adminData: {},
 
   // Functions
-  setAdminData: (data) => set({ adminData: data })
+  setAdminData: (data) => set({ adminData: data }),
+  resetAdminData: () => set({ adminData: {} })
 }));
