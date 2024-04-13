@@ -15,7 +15,7 @@ export const CartProvider = ({ children }) => {
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    if (cartProducts.size > 0) {
+    if (cartProducts.length > 0) {
       localStorage.setItem("cart", JSON.stringify(cartProducts));
     }
   }, [cartProducts]);
@@ -23,8 +23,10 @@ export const CartProvider = ({ children }) => {
   const getCartProducts = async () => {
     try {
       setIsLoading(true);
+      const uniqueProducts = new Set(cartProducts)
+      const uniqueArray = [...uniqueProducts]
       const productsResponse = await Promise.all(
-        cartProducts.map(async (id) => {
+        uniqueArray.map(async (id) => {
           const response = await axios.get(`/api/client/product/${id}`);
           return response.data.products;
         })
@@ -39,14 +41,8 @@ export const CartProvider = ({ children }) => {
   const addProductToCart = (productID) => {
     setCartProducts((prev) => [...prev, productID]);
   };
-  const removeCartProduct = (productID) => {
-    setCartProducts((prev) => {
-      const position = prev.indexOf(productID);
-      if (position !== -1) {
-        return prev.filter((_, index) => index !== position);
-      }
-      return prev;
-    });
+  const lessOfThisProduct = (productID) => {
+    console.log(productID);
   };
 
   return (
@@ -56,7 +52,7 @@ export const CartProvider = ({ children }) => {
         getCartProducts,
         isLoading,
         addProductToCart,
-        removeCartProduct,
+        lessOfThisProduct,
       }}
     >
       {children}
