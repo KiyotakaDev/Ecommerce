@@ -13,6 +13,7 @@ export const CartProvider = ({ children }) => {
   const defaultProducts = JSON.parse(localStorage.getItem("cart"));
   const [cartProducts, setCartProducts] = useState(defaultProducts || []);
   const [isLoading, setIsLoading] = useState(false);
+  const [productID, setProductID] = useState(null)
 
   useEffect(() => {
     if (cartProducts.length > 0) {
@@ -53,6 +54,8 @@ export const CartProvider = ({ children }) => {
         isLoading,
         addProductToCart,
         lessOfThisProduct,
+        setProductID,
+        productID,
       }}
     >
       {children}
