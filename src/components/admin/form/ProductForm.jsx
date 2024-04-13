@@ -201,9 +201,9 @@ const ProductForm = () => {
                           className="h-24 w-auto rounded-lg"
                         />
                       ))}
-                    <label className="w-24 h-24 flex flex-col justify-center items-center bg-gray-300 rounded-lg cursor-pointer hover:scale-105 transition-all duration-200 ease-out">
-                      <ArrowUpOnSquareIcon className="stroke-teal-700 w-12 h-12" />
-                      <p className="text-teal-700">Upload</p>
+                    <label className="w-24 h-24 flex flex-col justify-center items-center bg-violet-200 rounded-lg cursor-pointer hover:scale-105 transition-all duration-200 ease-out">
+                      <ArrowUpOnSquareIcon className="stroke-violet-950 w-12 h-12" />
+                      <p className="text-violet-950 font-bold text-base">Upload</p>
                       <input
                         type="file"
                         accept="image/png, image/jpg, image/jpeg"
