@@ -50,13 +50,19 @@ const ProductForm = () => {
     try {
       if (id) {
         // Edit
-        const response = await axios.put(`/api/admin/products/${id}`, productData);
+        const response = await axios.put(
+          `/api/admin/products/${id}`,
+          productData
+        );
         if (response.status === 200) {
           router.push("/admin/products");
         }
       } else {
         // Create
-        const response = await axios.post("/api/admin/products/new", productData);
+        const response = await axios.post(
+          "/api/admin/products/new",
+          productData
+        );
         if (response.status === 200) {
           router.push("/admin/products");
         }
@@ -96,13 +102,13 @@ const ProductForm = () => {
 
   // Handle properties
   const changeProductProp = (name, value) => {
-    setProductData(prev => ({
+    setProductData((prev) => ({
       ...prev,
       properties: {
         ...prev.properties,
-        [name]: value
-      }
-    }))    
+        [name]: value,
+      },
+    }));
   };
 
   let propertiesToFill = [];
@@ -143,7 +149,7 @@ const ProductForm = () => {
                       category: e.target.value,
                     }))
                   }
-                  className="input-fields"
+                  className="input-fields m-0 bg-transparent hover:bg-violet-100/50"
                 >
                   <option value="">Uncategorized</option>
                   {categories.length > 0 &&
@@ -152,26 +158,37 @@ const ProductForm = () => {
                     ))}
                 </select>
 
-                {propertiesToFill.length > 0 &&
-                  propertiesToFill.map((p, i) => (
-                    <div key={i} className="flex gap-2">
-                      <div>{p.name}</div>
-                      <select
-                        value={productData.properties[p.name]}
-                        onChange={(e) =>
-                          changeProductProp(p.name, e.target.value)
-                        }
-                        className="input-fields"
-                      >
-                        <option value="">(select)</option>
-                        {p.values.map((v, i) => (
-                          <option key={i} value={v}>
-                            {v}
-                          </option>
-                        ))}
-                      </select>
-                    </div>
-                  ))}
+                {propertiesToFill.length > 0 && (
+                  <table className="mt-2 mb-4">
+                    <thead>
+                      <tr>
+                        <td>Property</td>
+                        <td>Value</td>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {propertiesToFill.map((p, i) => (
+                        <tr key={i}>
+                          <td className="font-semibold">{p.name}</td>
+                          <td className="m-0">
+                            <select
+                              value={productData.properties[p.name]}
+                              onChange={(e) =>
+                                changeProductProp(p.name, e.target.value)
+                              }
+                              className="input-fields m-0 bg-transparent hover:bg-violet-100/50"
+                            >
+                              <option value="">(select)</option>
+                              {p.values.map((v, i) => (
+                                <option key={i} value={v}>{v}</option>
+                              ))}
+                            </select>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                )}
 
                 <div className="flex flex-col flex-wrap">
                   <label className="form-label">Images</label>
