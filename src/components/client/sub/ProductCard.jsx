@@ -1,13 +1,20 @@
+import Link from "next/link";
 import { useCartContext } from "../CartProvider";
 
 const ProductCard = ({ id, product: name, price, imagesPath: images }) => {
-  const { addProductToCart } = useCartContext();
+  const { addProductToCart, setProductID } = useCartContext();
 
   return (
     <div className="h-full flex flex-col justify-between">
       <div>
         <div className="bg-white flex justify-center items-center h-44 rounded-lg">
-          <img src={images[0]} alt="" className="max-w-full max-h-36" />
+          <Link onClick={() => setProductID(id)} href={`/ecommerce/product/${name}`}>
+            <img
+              src={images[0]}
+              alt=""
+              className="max-w-full max-h-36 hover:-translate-y-4 transition-all duration-300 ease-out"
+            />
+          </Link>
         </div>
         <p className="mt-2">{name}</p>
       </div>
