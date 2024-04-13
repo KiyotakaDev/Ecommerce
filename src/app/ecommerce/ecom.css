@@ -48,3 +48,7 @@
   display: grid;
   grid-template-columns: repeat(4, 1fr);
 }
+.single-grid {
+  display: grid;
+  grid-template-columns: 0.8fr 1.2fr;
+}
