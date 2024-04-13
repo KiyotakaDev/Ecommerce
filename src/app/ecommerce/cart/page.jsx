@@ -119,9 +119,13 @@ const CartPage = () => {
           <div className="bg-white rounded-lg h-[40vh] w-full">payment</div>
         </div>
       ) : (
-        <div className="mt-20">
-          <p className="text-4xl font-bold text-center">No products in cart</p>
-        </div>
+        <Animation>
+          <div className="mt-20">
+            <p className="text-4xl font-bold text-center">
+              No products in cart
+            </p>
+          </div>
+        </Animation>
       )}
     </div>
   );
