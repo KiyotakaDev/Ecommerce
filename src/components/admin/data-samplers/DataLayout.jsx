@@ -88,14 +88,16 @@ const DataLayout = () => {
                     <td>
                       {username !== "root" || product ? (
                         <div className="flex gap-x-5 justify-evenly">
-                          <Link
-                            onClick={() => setId(data.id)}
-                            href={`${type}s/edit/${data.product}`}
-                            className="action-btn action-edit w-full"
-                          >
-                            <PencilSquareIcon className="w-5 h-5" />
-                            Edit
-                          </Link>
+                          {!username && (
+                            <Link
+                              onClick={() => setId(data.id)}
+                              href={`${type}s/edit/${data.product}`}
+                              className="action-btn action-edit w-full"
+                            >
+                              <PencilSquareIcon className="w-5 h-5" />
+                              Edit
+                            </Link>
+                          )}
                           <button
                             onClick={() => showActions(data.id, validation)}
                             className="action-btn action-delete w-full"
