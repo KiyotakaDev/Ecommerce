@@ -116,7 +116,14 @@ const CartPage = () => {
               </Animation>
             ) : null}
           </div>
-          <div className="bg-white rounded-lg h-[40vh] w-full">payment</div>
+          <div className="bg-white rounded-lg h-[40vh] w-full flex flex-col justify-center items-center gap-y-4">
+            <p className="text-2xl">
+              Total: ${total / 100}
+            </p>
+            <button className="client-p-btn text-white text-2xl">
+              Buy
+            </button>
+          </div>
         </div>
       ) : (
         <Animation>
