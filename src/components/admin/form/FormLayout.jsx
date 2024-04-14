@@ -1,3 +1,4 @@
+import AdminForm from './AdminForm';
 import ProductForm from './ProductForm';
 
 const FormLayout = ({ id }) => {
@@ -10,7 +11,10 @@ const FormLayout = ({ id }) => {
     )
   } else if (id == 'admins') {
     return (
-      <div>Admins</div>
+      <>
+        <h1 className='form-title'>New Admin</h1>
+        <AdminForm />
+      </>
     )
   }
 }
